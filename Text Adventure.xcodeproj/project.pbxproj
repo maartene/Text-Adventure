@@ -1,0 +1,461 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DE003E1E2269EBD0006BF1F2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE003E1D2269EBD0006BF1F2 /* AppDelegate.swift */; };
+		DE003E202269EBD0006BF1F2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE003E1F2269EBD0006BF1F2 /* ViewController.swift */; };
+		DE003E222269EBD2006BF1F2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE003E212269EBD2006BF1F2 /* Assets.xcassets */; };
+		DE003E252269EBD2006BF1F2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE003E232269EBD2006BF1F2 /* Main.storyboard */; };
+		DE003E312269EBD2006BF1F2 /* Text_AdventureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE003E302269EBD2006BF1F2 /* Text_AdventureTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DE003E2D2269EBD2006BF1F2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DE003E122269EBCF006BF1F2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DE003E192269EBCF006BF1F2;
+			remoteInfo = "Text Adventure";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		DE003E1A2269EBD0006BF1F2 /* Text Adventure.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Text Adventure.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DE003E1D2269EBD0006BF1F2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		DE003E1F2269EBD0006BF1F2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		DE003E212269EBD2006BF1F2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DE003E242269EBD2006BF1F2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		DE003E262269EBD2006BF1F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DE003E272269EBD2006BF1F2 /* Text_Adventure.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Text_Adventure.entitlements; sourceTree = "<group>"; };
+		DE003E2C2269EBD2006BF1F2 /* Text AdventureTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Text AdventureTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DE003E302269EBD2006BF1F2 /* Text_AdventureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text_AdventureTests.swift; sourceTree = "<group>"; };
+		DE003E322269EBD2006BF1F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DE003E172269EBCF006BF1F2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DE003E292269EBD2006BF1F2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DE003E112269EBCF006BF1F2 = {
+			isa = PBXGroup;
+			children = (
+				DE003E1C2269EBD0006BF1F2 /* Text Adventure */,
+				DE003E2F2269EBD2006BF1F2 /* Text AdventureTests */,
+				DE003E1B2269EBD0006BF1F2 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DE003E1B2269EBD0006BF1F2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DE003E1A2269EBD0006BF1F2 /* Text Adventure.app */,
+				DE003E2C2269EBD2006BF1F2 /* Text AdventureTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DE003E1C2269EBD0006BF1F2 /* Text Adventure */ = {
+			isa = PBXGroup;
+			children = (
+				DE003E1D2269EBD0006BF1F2 /* AppDelegate.swift */,
+				DE003E1F2269EBD0006BF1F2 /* ViewController.swift */,
+				DE003E212269EBD2006BF1F2 /* Assets.xcassets */,
+				DE003E232269EBD2006BF1F2 /* Main.storyboard */,
+				DE003E262269EBD2006BF1F2 /* Info.plist */,
+				DE003E272269EBD2006BF1F2 /* Text_Adventure.entitlements */,
+			);
+			path = "Text Adventure";
+			sourceTree = "<group>";
+		};
+		DE003E2F2269EBD2006BF1F2 /* Text AdventureTests */ = {
+			isa = PBXGroup;
+			children = (
+				DE003E302269EBD2006BF1F2 /* Text_AdventureTests.swift */,
+				DE003E322269EBD2006BF1F2 /* Info.plist */,
+			);
+			path = "Text AdventureTests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DE003E192269EBCF006BF1F2 /* Text Adventure */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DE003E352269EBD2006BF1F2 /* Build configuration list for PBXNativeTarget "Text Adventure" */;
+			buildPhases = (
+				DE003E162269EBCF006BF1F2 /* Sources */,
+				DE003E172269EBCF006BF1F2 /* Frameworks */,
+				DE003E182269EBCF006BF1F2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Text Adventure";
+			productName = "Text Adventure";
+			productReference = DE003E1A2269EBD0006BF1F2 /* Text Adventure.app */;
+			productType = "com.apple.product-type.application";
+		};
+		DE003E2B2269EBD2006BF1F2 /* Text AdventureTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DE003E382269EBD2006BF1F2 /* Build configuration list for PBXNativeTarget "Text AdventureTests" */;
+			buildPhases = (
+				DE003E282269EBD2006BF1F2 /* Sources */,
+				DE003E292269EBD2006BF1F2 /* Frameworks */,
+				DE003E2A2269EBD2006BF1F2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DE003E2E2269EBD2006BF1F2 /* PBXTargetDependency */,
+			);
+			name = "Text AdventureTests";
+			productName = "Text AdventureTests";
+			productReference = DE003E2C2269EBD2006BF1F2 /* Text AdventureTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DE003E122269EBCF006BF1F2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1020;
+				LastUpgradeCheck = 1020;
+				ORGANIZATIONNAME = thedreamweb;
+				TargetAttributes = {
+					DE003E192269EBCF006BF1F2 = {
+						CreatedOnToolsVersion = 10.2.1;
+					};
+					DE003E2B2269EBD2006BF1F2 = {
+						CreatedOnToolsVersion = 10.2.1;
+						TestTargetID = DE003E192269EBCF006BF1F2;
+					};
+				};
+			};
+			buildConfigurationList = DE003E152269EBCF006BF1F2 /* Build configuration list for PBXProject "Text Adventure" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = DE003E112269EBCF006BF1F2;
+			productRefGroup = DE003E1B2269EBD0006BF1F2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DE003E192269EBCF006BF1F2 /* Text Adventure */,
+				DE003E2B2269EBD2006BF1F2 /* Text AdventureTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DE003E182269EBCF006BF1F2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DE003E222269EBD2006BF1F2 /* Assets.xcassets in Resources */,
+				DE003E252269EBD2006BF1F2 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DE003E2A2269EBD2006BF1F2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DE003E162269EBCF006BF1F2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DE003E202269EBD0006BF1F2 /* ViewController.swift in Sources */,
+				DE003E1E2269EBD0006BF1F2 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DE003E282269EBD2006BF1F2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DE003E312269EBD2006BF1F2 /* Text_AdventureTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DE003E2E2269EBD2006BF1F2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DE003E192269EBCF006BF1F2 /* Text Adventure */;
+			targetProxy = DE003E2D2269EBD2006BF1F2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		DE003E232269EBD2006BF1F2 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DE003E242269EBD2006BF1F2 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		DE003E332269EBD2006BF1F2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		DE003E342269EBD2006BF1F2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		DE003E362269EBD2006BF1F2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Text Adventure/Text_Adventure.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = ZXW8GTM6FG;
+				INFOPLIST_FILE = "Text Adventure/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "eu.thedreamweb.Text-Adventure";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		DE003E372269EBD2006BF1F2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Text Adventure/Text_Adventure.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = ZXW8GTM6FG;
+				INFOPLIST_FILE = "Text Adventure/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "eu.thedreamweb.Text-Adventure";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		DE003E392269EBD2006BF1F2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = ZXW8GTM6FG;
+				INFOPLIST_FILE = "Text AdventureTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "eu.thedreamweb.Text-AdventureTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Text Adventure.app/Contents/MacOS/Text Adventure";
+			};
+			name = Debug;
+		};
+		DE003E3A2269EBD2006BF1F2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = ZXW8GTM6FG;
+				INFOPLIST_FILE = "Text AdventureTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "eu.thedreamweb.Text-AdventureTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Text Adventure.app/Contents/MacOS/Text Adventure";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DE003E152269EBCF006BF1F2 /* Build configuration list for PBXProject "Text Adventure" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DE003E332269EBD2006BF1F2 /* Debug */,
+				DE003E342269EBD2006BF1F2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DE003E352269EBD2006BF1F2 /* Build configuration list for PBXNativeTarget "Text Adventure" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DE003E362269EBD2006BF1F2 /* Debug */,
+				DE003E372269EBD2006BF1F2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DE003E382269EBD2006BF1F2 /* Build configuration list for PBXNativeTarget "Text AdventureTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DE003E392269EBD2006BF1F2 /* Debug */,
+				DE003E3A2269EBD2006BF1F2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DE003E122269EBCF006BF1F2 /* Project object */;
+}
