@@ -12,6 +12,10 @@
 		DE003E222269EBD2006BF1F2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE003E212269EBD2006BF1F2 /* Assets.xcassets */; };
 		DE003E252269EBD2006BF1F2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE003E232269EBD2006BF1F2 /* Main.storyboard */; };
 		DE003E312269EBD2006BF1F2 /* Text_AdventureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE003E302269EBD2006BF1F2 /* Text_AdventureTests.swift */; };
+		DE003E3D226A5443006BF1F2 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE003E3C226A5443006BF1F2 /* Parser.swift */; };
+		DEE467B1226AF2A500C78DD3 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE467B0226AF2A500C78DD3 /* Formatter.swift */; };
+		DEE467B3226C8BB600C78DD3 /* Lexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE467B2226C8BB600C78DD3 /* Lexer.swift */; };
+		DEE467B5226CFE6D00C78DD3 /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE467B4226CFE6D00C78DD3 /* World.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +39,10 @@
 		DE003E2C2269EBD2006BF1F2 /* Text AdventureTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Text AdventureTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE003E302269EBD2006BF1F2 /* Text_AdventureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text_AdventureTests.swift; sourceTree = "<group>"; };
 		DE003E322269EBD2006BF1F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DE003E3C226A5443006BF1F2 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
+		DEE467B0226AF2A500C78DD3 /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
+		DEE467B2226C8BB600C78DD3 /* Lexer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lexer.swift; sourceTree = "<group>"; };
+		DEE467B4226CFE6D00C78DD3 /* World.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = World.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +84,7 @@
 		DE003E1C2269EBD0006BF1F2 /* Text Adventure */ = {
 			isa = PBXGroup;
 			children = (
+				DE003E3B226A50B7006BF1F2 /* Model */,
 				DE003E1D2269EBD0006BF1F2 /* AppDelegate.swift */,
 				DE003E1F2269EBD0006BF1F2 /* ViewController.swift */,
 				DE003E212269EBD2006BF1F2 /* Assets.xcassets */,
@@ -93,6 +102,17 @@
 				DE003E322269EBD2006BF1F2 /* Info.plist */,
 			);
 			path = "Text AdventureTests";
+			sourceTree = "<group>";
+		};
+		DE003E3B226A50B7006BF1F2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DE003E3C226A5443006BF1F2 /* Parser.swift */,
+				DEE467B0226AF2A500C78DD3 /* Formatter.swift */,
+				DEE467B2226C8BB600C78DD3 /* Lexer.swift */,
+				DEE467B4226CFE6D00C78DD3 /* World.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -195,8 +215,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DEE467B5226CFE6D00C78DD3 /* World.swift in Sources */,
 				DE003E202269EBD0006BF1F2 /* ViewController.swift in Sources */,
 				DE003E1E2269EBD0006BF1F2 /* AppDelegate.swift in Sources */,
+				DEE467B1226AF2A500C78DD3 /* Formatter.swift in Sources */,
+				DE003E3D226A5443006BF1F2 /* Parser.swift in Sources */,
+				DEE467B3226C8BB600C78DD3 /* Lexer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
