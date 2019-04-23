@@ -17,14 +17,22 @@ struct Lexer {
         "e": "GO EAST",
         "w": "GO WEST",
         "l": "LOOK",
-        "?": "HELP"
+        "?": "HELP",
+        "exit": "QUIT",
+        "get": "TAKE",
+        "i": "INVENTORY"
     ]
     
     static func lex(_ string: String) -> [String] {
-        let subStrings = string.split(separator: " ")
+        var subStrings = string.split(separator: " ")
         
         if let abbreviation = abbreviations[String(subStrings[0])] {
-            return lex(abbreviation)
+            var expandedString = abbreviation
+            for i in 1 ..< subStrings.count {
+                expandedString += " " + subStrings[i]
+            }
+            print("Expanded string: \(string) to : \(expandedString)")
+            return lex(expandedString)
         }
         
         var result = [String]()

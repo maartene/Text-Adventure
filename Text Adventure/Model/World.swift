@@ -20,6 +20,8 @@ class World {
         }
     }
     
+    var inventory = [Item]()
+    
     init() {
         // setup a test world with a couple of (connected) rooms.
         // this will probably be read from a file later.
@@ -34,12 +36,16 @@ class World {
         connectRoomFrom(room: rooms[2], using: .SOUTH, to: rooms[3])
         connectRoomFrom(room: rooms[3], using: .WEST, to: rooms[4])
         connectRoomFrom(room: rooms[4], using: .NORTH, to: rooms[1])
+        
+        rooms[3] = rooms[3].addItem(Item(name: "Skeleton Key", description: "Bone made key."))
+        rooms[3] = rooms[3].addItem(Item(name: "Green Key", description: "Green key."))
     }
     
     func connectRoomFrom(room: Room, using direction: Direction, to room2: Room, bidirectional: Bool = true) {
+        rooms[room.id] =
         room.addExit(direction: direction, roomID: room2.id)
         if bidirectional {
-            room2.addExit(direction: direction.opposite(), roomID: room.id)
+            rooms[room2.id] = room2.addExit(direction: direction.opposite(), roomID: room.id)
         }
     }
     
@@ -51,22 +57,91 @@ class World {
             return false
         }
     }
+    
+    func take(item: Item) -> Bool {
+        if currentRoom.items.contains(item) {
+            rooms[currentRoomIndex] = currentRoom.removeItem(item)
+            inventory.append(item)
+            return true
+        } else {
+            return false
+        }
+    }
 }
 
-class Room {
+struct Room {
     let id: Int
     var exits = [Direction: Int]()
     let description: String
+    var items = [Item]()
     
-    init(id: Int, description: String) {
+    init(id: Int, description: String, exits: [Direction: Int]? = nil) {
         self.id = id
         self.description = description
+        
+        if let exits = exits {
+            self.exits = exits
+        }
     }
     
-    func addExit(direction: Direction, roomID: Int) {
-        exits[direction] = roomID
+    func addExit(direction: Direction, roomID: Int) -> Room {
+        var newExits = [direction: roomID]
+        newExits.merge(self.exits) { (_, new) in new }
+        return Room(id: self.id, description: self.description, exits: newExits)
     }
     
+    func addItem(_ item: Item) -> Room {
+        var result = self
+        result.items.append(item)
+        return result
+    }
+    
+    func removeItem(_ item: Item) -> Room {
+        var result = self
+        
+        guard let index = result.items.firstIndex(of: item) else {
+                fatalError("Room \(self) does not contain an item \(item)")
+        }
+        
+        result.items.remove(at: index)
+        return result
+    }
+}
+
+struct Connection {
+    let fromRoom: Room
+    let toRoom: Room
+    let hasDoor: Bool
+    let requiresItemToOpen: Item?
+    var isOpen = false
+    
+    
+    func canOpen(inventory: [Item]) -> Bool {
+        if hasDoor == false {
+            return false
+        }
+        
+        if let requiredItem = requiresItemToOpen {
+            if inventory.contains(requiredItem) == false {
+                return false
+            }
+        }
+        return true
+    }
+    
+    func canPass() -> Bool {
+        if hasDoor && isOpen == false {
+            return false
+        }
+        
+        return true
+    }
+    
+}
+
+struct Item: Equatable {
+    let name: String
+    let description: String
 }
 
 enum Direction: String {
