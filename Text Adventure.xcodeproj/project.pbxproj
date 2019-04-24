@@ -16,6 +16,7 @@
 		DEE467B1226AF2A500C78DD3 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE467B0226AF2A500C78DD3 /* Formatter.swift */; };
 		DEE467B3226C8BB600C78DD3 /* Lexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE467B2226C8BB600C78DD3 /* Lexer.swift */; };
 		DEE467B5226CFE6D00C78DD3 /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE467B4226CFE6D00C78DD3 /* World.swift */; };
+		DEE467B722707C2400C78DD3 /* WorldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE467B622707C2300C78DD3 /* WorldTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +44,7 @@
 		DEE467B0226AF2A500C78DD3 /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		DEE467B2226C8BB600C78DD3 /* Lexer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lexer.swift; sourceTree = "<group>"; };
 		DEE467B4226CFE6D00C78DD3 /* World.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = World.swift; sourceTree = "<group>"; };
+		DEE467B622707C2300C78DD3 /* WorldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 			children = (
 				DE003E302269EBD2006BF1F2 /* Text_AdventureTests.swift */,
 				DE003E322269EBD2006BF1F2 /* Info.plist */,
+				DEE467B622707C2300C78DD3 /* WorldTests.swift */,
 			);
 			path = "Text AdventureTests";
 			sourceTree = "<group>";
@@ -228,6 +231,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DEE467B722707C2400C78DD3 /* WorldTests.swift in Sources */,
 				DE003E312269EBD2006BF1F2 /* Text_AdventureTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

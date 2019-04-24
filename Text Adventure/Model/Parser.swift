@@ -56,6 +56,8 @@ struct Parser {
             return describeRoom()
         case Verb.TAKE:
             return take(itemName: newCommand.noun!)
+        case Verb.OPEN:
+            return open()
         case Verb.INVENTORY:
             return inventory()
         case Verb.QUIT:
@@ -117,6 +119,20 @@ struct Parser {
         }
     }
     
+    func open() -> [FormattedString] {
+        if world.doorsInRoom(room: world.currentRoom).count < 1 {
+            return [FormattedString(string: "There is no closed door here.", style: .warning)]
+        }
+        
+        if world.open() {
+            var result = [FormattedString(string: "You opened the door.", style: .debug)]
+            result.append(contentsOf: describeRoom())
+            return result
+        } else {
+            return [FormattedString(string: "You could not open the door.", style: .warning)]
+        }
+    }
+    
     func help() -> [FormattedString] {
         var result = [FormattedString(string: "\nCommands: \n")]
         Verb.allCases.forEach {
@@ -152,6 +168,7 @@ struct Parser {
         result.append(contentsOf: showDescription())
         result.append(contentsOf: showExits())
         result.append(contentsOf: showItems())
+        result.append(contentsOf: showDoors())
         return result
     }
     
@@ -170,7 +187,18 @@ struct Parser {
     func showItems() -> [FormattedString] {
         var result = [FormattedString]()
         world.currentRoom.items.forEach {
-            result.append(FormattedString(string: "You see a \($0.name)\n"))
+            result.append(FormattedString(string: "You see a \($0.name)\n", style: .emphasis))
+        }
+        
+        return result
+    }
+    
+    func showDoors() -> [FormattedString] {
+        let doorsInRoom = world.doorsInRoom(room: world.currentRoom)
+        
+        var result = [FormattedString]()
+        doorsInRoom.forEach {
+            result.append(FormattedString(string: "There is a DOOR to the \($0.direction(from: world.currentRoom))\n", style: .emphasis))
         }
         
         return result
@@ -182,6 +210,7 @@ enum Verb: String, CaseIterable {
     case LOOK
     case LOOKAT
     case GO
+    case OPEN
     case TAKE
     case ABOUT
     case INVENTORY

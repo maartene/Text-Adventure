@@ -12,6 +12,7 @@ import AppKit
 class World {
     // make sure that rooms ID == index in rooms array
     var rooms = [Room]()
+    var doors = [Door]()
     var currentRoomIndex = 0
     
     var currentRoom: Room {
@@ -30,6 +31,7 @@ class World {
         rooms.append(Room(id: 2, description: "Room 2"))
         rooms.append(Room(id: 3, description: "Room 3"))
         rooms.append(Room(id: 4, description: "Room 4"))
+        rooms.append(Room(id: 5, description: "SECRET STASH"))
         
         connectRoomFrom(room: rooms[0], using: .EAST, to: rooms[1])
         connectRoomFrom(room: rooms[1], using: .EAST, to: rooms[2])
@@ -39,6 +41,8 @@ class World {
         
         rooms[3] = rooms[3].addItem(Item(name: "Skeleton Key", description: "Bone made key."))
         rooms[3] = rooms[3].addItem(Item(name: "Green Key", description: "Green key."))
+        
+        doors.append(Door.createDoor(between: rooms[2], facing: .NORTH, to: rooms[5], itemToOpen: Item(name: "Skeleton Key", description: "")))
     }
     
     func connectRoomFrom(room: Room, using direction: Direction, to room2: Room, bidirectional: Bool = true) {
@@ -47,6 +51,12 @@ class World {
         if bidirectional {
             rooms[room2.id] = room2.addExit(direction: direction.opposite(), roomID: room.id)
         }
+    }
+    
+    func connectRoomFrom(roomId: Int, using direction: Direction, to room2Id: Int, bidirectional: Bool = true) {
+        let room1 = rooms[roomId]
+        let room2 = rooms[room2Id]
+        connectRoomFrom(room: room1, using: direction, to: room2, bidirectional: bidirectional)
     }
     
     func go(direction: Direction) -> Bool {
@@ -66,6 +76,22 @@ class World {
         } else {
             return false
         }
+    }
+    
+    func doorsInRoom(room: Room) -> [Door] {
+        return doors.filter { $0.betweenRooms.keys.contains(room.id) }
+    }
+    
+    func open() -> Bool {
+        let doorsInCurrentRoom = doorsInRoom(room: currentRoom)
+        var result = false
+        if doorsInCurrentRoom.count > 0 {
+            doorsInCurrentRoom.forEach {
+                result = $0.open(world: self)
+                if result { doors.remove(at: doors.firstIndex(of: $0)!) }
+            }
+        }
+        return result
     }
 }
 
@@ -108,40 +134,55 @@ struct Room {
     }
 }
 
-struct Connection {
-    let fromRoom: Room
-    let toRoom: Room
-    let hasDoor: Bool
-    let requiresItemToOpen: Item?
-    var isOpen = false
-    
-    
-    func canOpen(inventory: [Item]) -> Bool {
-        if hasDoor == false {
-            return false
-        }
-        
-        if let requiredItem = requiresItemToOpen {
-            if inventory.contains(requiredItem) == false {
-                return false
-            }
-        }
-        return true
-    }
-    
-    func canPass() -> Bool {
-        if hasDoor && isOpen == false {
-            return false
-        }
-        
-        return true
-    }
-    
-}
-
 struct Item: Equatable {
+    static func == (lhs: Item, rhs: Item) -> Bool {
+        return lhs.name == rhs.name
+    }
+    
     let name: String
     let description: String
+}
+
+// when you open a door, it creates a new connection
+struct Door: Equatable {
+    let betweenRooms: [Int: Direction]
+    var requiresItemToOpen: Item?
+    
+    static func createDoor(between room1: Room, facing: Direction, to room2: Room, itemToOpen: Item? = nil) -> Door {
+        let betweenRooms = [room1.id: facing, room2.id: facing.opposite()]
+        return Door(betweenRooms: betweenRooms, requiresItemToOpen: itemToOpen)
+    }
+    
+    func canOpen(world: World) -> Bool {
+        if let itemToOpen = requiresItemToOpen {
+            return world.inventory.contains(itemToOpen)
+        } else {
+            return true
+        }
+    }
+    
+    func open(world: World) -> Bool {
+        if canOpen(world: world) {
+            let roomIDs = Array<Int>(betweenRooms.keys)
+            world.connectRoomFrom(roomId: roomIDs[0], using: betweenRooms[roomIDs[0]]!, to: roomIDs[1], bidirectional: true)
+            
+            if let itemToOpen = requiresItemToOpen {
+                world.inventory.remove(at: world.inventory.firstIndex(of: itemToOpen)!)
+            }
+            
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func direction(from room: Room) -> Direction {
+        if let dir = betweenRooms[room.id] {
+            return dir
+        } else {
+            fatalError("There is no door in room \(room).")
+        }
+    }
 }
 
 enum Direction: String {

@@ -45,6 +45,8 @@ struct Formatter {
             return setAttribute(attributes: attributes, forKey: .font, newValue: NSFont(name: font.fontName, size: 24)!)
         case .noEmphasis:
             return setAttribute(attributes: defaultAttributes, forKey: .foregroundColor, newValue: NSColor.gray)
+        case .emphasis:
+            return setAttribute(attributes: defaultAttributes, forKey: .foregroundColor, newValue: NSColor.green)
         case .debug:
             return setAttribute(attributes: defaultAttributes, forKey: .foregroundColor, newValue: NSColor.purple)
         default:
@@ -73,5 +75,6 @@ enum Style {
     case title
     case warning
     case error
+    case emphasis
     case debug
 }
