@@ -88,6 +88,7 @@
 		DE003E1C2269EBD0006BF1F2 /* Text Adventure */ = {
 			isa = PBXGroup;
 			children = (
+				DE7B7440227483F7002926E4 /* View */,
 				DE003E3B226A50B7006BF1F2 /* Model */,
 				DE003E1D2269EBD0006BF1F2 /* AppDelegate.swift */,
 				DE003E1F2269EBD0006BF1F2 /* ViewController.swift */,
@@ -95,7 +96,6 @@
 				DE003E232269EBD2006BF1F2 /* Main.storyboard */,
 				DE003E262269EBD2006BF1F2 /* Info.plist */,
 				DE003E272269EBD2006BF1F2 /* Text_Adventure.entitlements */,
-				DE70EB4922746C0A0076C503 /* template.html */,
 			);
 			path = "Text Adventure";
 			sourceTree = "<group>";
@@ -114,11 +114,19 @@
 			isa = PBXGroup;
 			children = (
 				DE003E3C226A5443006BF1F2 /* Parser.swift */,
-				DEE467B0226AF2A500C78DD3 /* Formatter.swift */,
 				DEE467B2226C8BB600C78DD3 /* Lexer.swift */,
 				DEE467B4226CFE6D00C78DD3 /* World.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		DE7B7440227483F7002926E4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DE70EB4922746C0A0076C503 /* template.html */,
+				DEE467B0226AF2A500C78DD3 /* Formatter.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

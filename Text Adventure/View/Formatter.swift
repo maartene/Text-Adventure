@@ -15,13 +15,13 @@ struct Formatter {
     
     init() {
         if let templatePath = Bundle.main.path(forResource: "template", ofType: "html") {
-            print(templatePath)
+            print("Loading html template from: \(templatePath).")
             let url = URL(fileURLWithPath: templatePath)
         
             do {
                 let data = try Data(contentsOf: url)
                 templateHTML = String(data: data, encoding: .utf8) ?? ""
-                print(templateHTML)
+                // print(templateHTML)
             } catch {
                 print(error)
                 templateHTML = ""
