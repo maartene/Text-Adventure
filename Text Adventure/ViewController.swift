@@ -46,9 +46,7 @@ class ViewController: NSViewController, NSWindowDelegate {
         self.view.window?.delegate = self
         self.view.window?.makeFirstResponder(commandTextField)
         
-        formatter = Formatter(defaultAttributes: outputTextView.typingAttributes)
-        formatter.defaultFont = NSFont(name: "Helvetica", size: 16.0)!
-        formatter.defaultColor = NSColor.white
+        formatter = Formatter()
         outputTextView.textStorage?.append(formatter.format(text: parser.welcome()))
     }
     
