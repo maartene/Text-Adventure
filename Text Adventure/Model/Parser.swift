@@ -13,14 +13,14 @@ struct Parser {
     
     var world: World!
     
-    func welcome() -> [FormattedString] {
+    func welcome() -> String {
 
-        var result = [FormattedString(string: "Welcome to Text Adventure\n\n", style: .title)]
-        result.append(contentsOf: describeRoom())
+        var result = "<H1>Welcome to Text Adventure</H1>"
+        result += describeRoom()
         return result
     }
     
-    mutating func parse(command: String) -> [FormattedString] {
+    mutating func parse(command: String) -> String {
         
         let words = Lexer.lex(command)
         
@@ -31,7 +31,7 @@ struct Parser {
                 if verb.expectNoun() {
                     // expect a noun, check whether one is available
                     if words.count < 2 {
-                        return [FormattedString(string: "Expected a noun as the second word for verb: \(verb)\n", style: .warning)]
+                        return "<WARNING>Expected a noun as the second word for verb: \(verb)</WARNING>\n"
                     } else {
                         newCommand = Command(verb: verb, noun: words[1])
                     }
@@ -40,10 +40,11 @@ struct Parser {
                     newCommand = Command(verb: verb, noun: nil)
                 }
             } else {
-                return [FormattedString(string: "Expected a verb as the first word, found: \(verbWord)\n", style: .warning)]
+                let word = verbWord.isEmpty ? ", but none was found." : ", found: \"\(verbWord)\""
+                return "<WARNING>Expected a verb as the first word\(word)</WARNING>\n"
             }
         } else {
-            return [FormattedString(string: "nothing to parse\n", style: .warning)]
+            return "<DEBUG>nothing to parse</DEBUG>\n"
         }
         
         // execute the command
@@ -62,15 +63,15 @@ struct Parser {
             return inventory()
         case Verb.QUIT:
             NSApplication.shared.terminate(nil)
-            return [FormattedString(string: "Good Bye!")]
+            return "<H2>Good Bye!</H2>"
             
         default:
             // echo what comes in
-            return [FormattedString(string: "Received command: \(newCommand)\n", style: .debug)]
+            return "<DEBUG>Received command: \(newCommand)</DEBUG>\n"
         }
     }
     
-    func go(direction: String) -> [FormattedString] {
+    func go(direction: String) -> String {
         // check whether the current room has this exit
         if let direction = Direction(rawValue: direction.uppercased()) {
             // direction is a valid Direction
@@ -78,14 +79,14 @@ struct Parser {
                 return describeRoom()
             } else {
                 // apparently not a valid exit
-                return [FormattedString(string: "You bang against the wall.\n", style: .warning)]
+                return "<WARNING>You bang against the wall.</WARNING>\n"
             }
         } else {
-            return [FormattedString(string: "\(direction) is not a valid direction.\n", style: .warning)]
+            return "<WARNING>\(direction) is not a valid direction.</WARNING>\n"
         }
     }
     
-    func take(itemName: String) -> [FormattedString] {
+    func take(itemName: String) -> String {
         // first try and find the item in the room
         var potentialItems = [Item]()
         for index in 0 ..< world.currentRoom.items.count {
@@ -104,54 +105,54 @@ struct Parser {
         switch potentialItems.count {
         case 0:
             // no potential item was found
-            return [FormattedString(string: "There is no \(itemName) here.\n", style: .warning)]
+            return "There is no <ITEM>\(itemName)</ITEM> here.\n"
         case 1:
             // we found exactly one item that matches. Try and get the item.
             let item = potentialItems.first!
             if world.take(item: item) {
-                return [FormattedString(string: "\nYou picked up \(item.name).\n")]
+                return "\nYou picked up <ITEM>\(item.name)</ITEM>.\n"
             } else {
-                return [FormattedString(string: "\nYou could not pick up \(item.name)\n", style: .debug)]
+                return "\nYou could not pick up <ITEM>\(item.name)</ITEM>\n"
             }
         default:
             // more than one potential item was found, how can we choose?
-            return [FormattedString(string: "\nMore than one item matches \(itemName). Please be more specific.\n", style: .warning)]
+            return "\nMore than one item matches <ITEM>\(itemName)</ITEM>. Please be more specific.\n"
         }
     }
     
-    func open() -> [FormattedString] {
+    func open() -> String {
         if world.doorsInRoom(room: world.currentRoom).count < 1 {
-            return [FormattedString(string: "There is no closed door here.", style: .warning)]
+            return "<WARNING>There is no closed door here.</WARNING>\n"
         }
         
         if world.open() {
-            var result = [FormattedString(string: "You opened the door.", style: .debug)]
-            result.append(contentsOf: describeRoom())
+            var result = "<ACTION>You opened the door.</ACTION>\n"
+            result += describeRoom()
             return result
         } else {
-            return [FormattedString(string: "You could not open the door.", style: .warning)]
+            return "<WARNING>You could not open the door.</WARNING>\n"
         }
     }
     
-    func help() -> [FormattedString] {
-        var result = [FormattedString(string: "\nCommands: \n")]
+    func help() -> String {
+        var result = "\nCommands: \n"
         Verb.allCases.forEach {
-            result.append(FormattedString(string: $0.rawValue + "\n", style: .noEmphasis))
+            result += $0.rawValue + "\n"
         }
-        result.append(FormattedString(string: "\n"))
+        result += "\n"
         return result
     }
     
-    func inventory() -> [FormattedString] {
-        var result = [FormattedString(string: "\nYou carry: \n")]
+    func inventory() -> String {
+        var result = "\nYou carry: \n"
         if world.inventory.count > 0 {
             world.inventory.forEach {
-                result.append(FormattedString(string: $0.name, style: .noEmphasis))
+                result += "<ITEM>\($0.name)</ITEM>"
             }
         } else {
-            result.append(FormattedString(string: "Nothing."))
+            result += "Nothing."
         }
-        result.append(FormattedString(string: "\n"))
+        result += "\n"
         return result
     }
     
@@ -163,42 +164,42 @@ struct Parser {
         return true
     }
     
-    func describeRoom() -> [FormattedString] {
-        var result = [FormattedString(string: "\n\n", style: .noEmphasis)]
-        result.append(contentsOf: showDescription())
-        result.append(contentsOf: showExits())
-        result.append(contentsOf: showItems())
-        result.append(contentsOf: showDoors())
+    func describeRoom() -> String {
+        var result = "\n"
+        result += showDescription()
+        result += showExits()
+        result += showItems()
+        result += showDoors()
         return result
     }
     
-    func showDescription() -> [FormattedString] {
-        return [FormattedString(string: world.currentRoom.description + "\n", style: .noEmphasis)]
+    func showDescription() -> String {
+        return "<H3>\(world.currentRoom.name)</H3>" + world.currentRoom.description + "\n"
     }
     
-    func showExits() -> [FormattedString] {
-        var result = [FormattedString]()
+    func showExits() -> String {
+        var result = ""
         world.currentRoom.exits.keys.forEach {
-            result.append(FormattedString(string: "There is an exit to the \($0).\n"))
+            result += "There is an exit to the <EXIT>\($0)</EXIT>.\n"
         }
         return result
     }
     
-    func showItems() -> [FormattedString] {
-        var result = [FormattedString]()
+    func showItems() -> String {
+        var result = ""
         world.currentRoom.items.forEach {
-            result.append(FormattedString(string: "You see a \($0.name)\n", style: .emphasis))
+            result += "You see a <ITEM>\($0.name)</ITEM>\n"
         }
         
         return result
     }
     
-    func showDoors() -> [FormattedString] {
+    func showDoors() -> String {
         let doorsInRoom = world.doorsInRoom(room: world.currentRoom)
         
-        var result = [FormattedString]()
+        var result = ""
         doorsInRoom.forEach {
-            result.append(FormattedString(string: "There is a DOOR to the \($0.direction(from: world.currentRoom))\n", style: .emphasis))
+            result += "There is a <EXIT>DOOR</EXIT> to the <EXIT>\($0.direction(from: world.currentRoom))</EXIT>\n"
         }
         
         return result

@@ -26,6 +26,10 @@ struct Lexer {
     static func lex(_ string: String) -> [String] {
         var subStrings = string.split(separator: " ")
         
+        guard subStrings.count > 0 else {
+            return [""]
+        }
+        
         if let abbreviation = abbreviations[String(subStrings[0])] {
             var expandedString = abbreviation
             for i in 1 ..< subStrings.count {

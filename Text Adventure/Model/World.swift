@@ -26,12 +26,12 @@ class World {
     init() {
         // setup a test world with a couple of (connected) rooms.
         // this will probably be read from a file later.
-        rooms.append(Room(id: 0, description: "You find yourself in a small cupboard. There are some empty shelves nearby. The only light eminates from the crack between the floor and the door."))
-        rooms.append(Room(id: 1, description: "A slightly larger hallway. A skylight provides illumination, making your wonder what is better: not seeing anything because of absense of light or not seeing anything because there simply is nothing to see?"))
-        rooms.append(Room(id: 2, description: "Room 2"))
-        rooms.append(Room(id: 3, description: "Room 3"))
-        rooms.append(Room(id: 4, description: "Room 4"))
-        rooms.append(Room(id: 5, description: "SECRET STASH"))
+        rooms.append(Room(id: 0, name: "Small Cupboard", description: "You find yourself in a small cupboard. There are some empty shelves nearby. The only light eminates from the crack between the floor and the door."))
+        rooms.append(Room(id: 1, name: "Main Hall", description: "A slightly larger hallway. A skylight provides illumination, making your wonder what is better: not seeing anything because of absense of light or not seeing anything because there simply is nothing to see?"))
+        rooms.append(Room(id: 2, name: "Bedroom", description: "This appears to be the master bedroom."))
+        rooms.append(Room(id: 3, name: "East corridor", description: "You are in a tight corridor. There are some storage shelves left of you."))
+        rooms.append(Room(id: 4, name: "South corridor", description: "You are in a tight corridor. A ceiling window provides some light around you."))
+        rooms.append(Room(id: 5, name: "Secret Stash", description: "Congratulations! You found the secret stash!"))
         
         connectRoomFrom(room: rooms[0], using: .EAST, to: rooms[1])
         connectRoomFrom(room: rooms[1], using: .EAST, to: rooms[2])
@@ -98,12 +98,14 @@ class World {
 struct Room {
     let id: Int
     var exits = [Direction: Int]()
+    let name: String
     let description: String
     var items = [Item]()
     
-    init(id: Int, description: String, exits: [Direction: Int]? = nil) {
+    init(id: Int, name: String, description: String, exits: [Direction: Int]? = nil) {
         self.id = id
         self.description = description
+        self.name = name
         
         if let exits = exits {
             self.exits = exits
@@ -113,7 +115,7 @@ struct Room {
     func addExit(direction: Direction, roomID: Int) -> Room {
         var newExits = [direction: roomID]
         newExits.merge(self.exits) { (_, new) in new }
-        return Room(id: self.id, description: self.description, exits: newExits)
+        return Room(id: self.id, name: self.name, description: self.description, exits: newExits)
     }
     
     func addItem(_ item: Item) -> Room {

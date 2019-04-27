@@ -11,70 +11,50 @@ import AppKit
 
 struct Formatter {
     
-    var defaultAttributes = [NSAttributedString.Key: Any]()
+    var defaultColor: NSColor
+    var fontSize: Double
+    var defaultFont: NSFont
     
-    func format(formattedString: FormattedString) -> NSAttributedString {
-        return format(formattedStrings: [formattedString])
+    init(defaultColor: NSColor = NSColor.white, fontSize: Double = 12.0, defaultFontName: String = "Helvetica") {
+        self.defaultColor = defaultColor
+        self.fontSize = fontSize
+        self.defaultFont = NSFont(name: defaultFontName, size: CGFloat(fontSize)) ?? NSFont.systemFont(ofSize: CGFloat(fontSize))
     }
     
-    func format(formattedStrings: [FormattedString]) -> NSAttributedString {
-        let result = NSMutableAttributedString(string: "")
-        formattedStrings.forEach {
-            let formattedString = $0
-            let attributedString = NSAttributedString(string: formattedString.stringValue, attributes: getAttributesForStyle(formattedString.style))
-            result.append(attributedString)
+    init(defaultAttributes: [NSAttributedString.Key: Any]) {
+        if let defaultColor = defaultAttributes[NSAttributedString.Key.foregroundColor] as? NSColor {
+            self.defaultColor = defaultColor
+        } else {
+            self.defaultColor = NSColor.white
         }
-        return NSAttributedString(attributedString: result)
-    }
-    
-    func setAttribute(attributes: [NSAttributedString.Key: Any], forKey: NSAttributedString.Key, newValue: Any) -> [NSAttributedString.Key: Any] {
-        var result = attributes
-        result[forKey] = newValue
-        return result
-    }
-    
-    func getAttributesForStyle(_ style: Style) -> [NSAttributedString.Key: Any] {
-        switch style {
-        case .error:
-            return setAttribute(attributes: defaultAttributes, forKey: .foregroundColor, newValue: NSColor.red)
-        case .warning:
-            return setAttribute(attributes: defaultAttributes, forKey: .foregroundColor, newValue: NSColor.orange)
-        case .title:
-            let attributes = setAttribute(attributes: defaultAttributes, forKey: .foregroundColor, newValue: NSColor.green)
-            let font = defaultAttributes[.font] as! NSFont
-            return setAttribute(attributes: attributes, forKey: .font, newValue: NSFont(name: font.fontName, size: 24)!)
-        case .noEmphasis:
-            return setAttribute(attributes: defaultAttributes, forKey: .foregroundColor, newValue: NSColor.gray)
-        case .emphasis:
-            return setAttribute(attributes: defaultAttributes, forKey: .foregroundColor, newValue: NSColor.green)
-        case .debug:
-            return setAttribute(attributes: defaultAttributes, forKey: .foregroundColor, newValue: NSColor.purple)
-        default:
-            return defaultAttributes
+        
+        if let font = defaultAttributes[NSAttributedString.Key.font] as? NSFont {
+            self.fontSize = Double(font.pointSize)
+            self.defaultFont = font
+        } else {
+            self.fontSize = Double(NSFont.systemFontSize)
+            self.defaultFont = NSFont.systemFont(ofSize: CGFloat(fontSize))
         }
     }
-}
-
-struct FormattedString {
-    let stringValue: String
-    let style: Style
     
-    init(string: String, style: Style = .normal) {
-        self.stringValue = string
-        self.style = style
+    func format(text: String) -> NSAttributedString {
+        var result = "<div style=\"font-family: Helvetica; font-size: 16.0; color: #dddddd;\">" + text + "</div>"
+        result = result.replacingOccurrences(of: "\n", with: "<br>")
+        result = result.replacingOccurrences(of: "<EXIT>", with: "<span style=\"color: green;\">")
+        result = result.replacingOccurrences(of: "</EXIT>", with: "</span>")
+        result = result.replacingOccurrences(of: "<ITEM>", with: "<span style=\"color: orange;\">")
+        result = result.replacingOccurrences(of: "</ITEM>", with: "</span>")
+        result = result.replacingOccurrences(of: "<ACTION>", with: "<span style=\"color: yellow;\">")
+        result = result.replacingOccurrences(of: "</ACTION>", with: "</span>")
+        result = result.replacingOccurrences(of: "<WARNING>", with: "<span style=\"color: orange;\">")
+        result = result.replacingOccurrences(of: "</WARNING>", with: "</span>")
+        result = result.replacingOccurrences(of: "<DEBUG>", with: "<span style=\"color: purple;\">")
+        result = result.replacingOccurrences(of: "</DEBUG>", with: "</span>")
+        
+        let data = result.data(using: .utf8)!
+        
+        return NSAttributedString(html: data, documentAttributes: nil) ?? NSAttributedString(string: text)
     }
     
-    func appendToStringValue(_ value: String) -> FormattedString {
-        return FormattedString(string: self.stringValue + value, style: self.style)
-    }
-}
-
-enum Style {
-    case normal
-    case noEmphasis
-    case title
-    case warning
-    case error
-    case emphasis
-    case debug
+    
 }

@@ -16,12 +16,12 @@ class ViewController: NSViewController, NSWindowDelegate {
     @IBOutlet weak var outputScrollView: NSScrollView!
     
     var parser = Parser()
-    var formatter = Formatter()
+    var formatter: Formatter!
     var world = World()
     
     @IBAction func onCommandEnterButtonClicked(_ sender: Any) {
         if commandTextField.stringValue.count > 0 {
-            let formattedString = formatter.format(formattedStrings: parser.parse(command: commandTextField.stringValue))
+            let formattedString = formatter.format(text: parser.parse(command: commandTextField.stringValue))
             outputTextView.textStorage?.append(formattedString)
             commandTextField.stringValue = ""
             self.view.window?.makeFirstResponder(commandTextField)
@@ -46,9 +46,10 @@ class ViewController: NSViewController, NSWindowDelegate {
         self.view.window?.delegate = self
         self.view.window?.makeFirstResponder(commandTextField)
         
-        formatter.defaultAttributes = outputTextView.typingAttributes
-        formatter.defaultAttributes[.font] = NSFont(name: "Helvetica", size: 16.0)
-        outputTextView.textStorage?.append(formatter.format(formattedStrings: parser.welcome()))
+        formatter = Formatter(defaultAttributes: outputTextView.typingAttributes)
+        formatter.defaultFont = NSFont(name: "Helvetica", size: 16.0)!
+        formatter.defaultColor = NSColor.white
+        outputTextView.textStorage?.append(formatter.format(text: parser.welcome()))
     }
     
     func windowWillClose(_ notification: Notification) {
