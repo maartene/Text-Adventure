@@ -9,7 +9,7 @@
 import Foundation
 import AppKit
 
-class World {
+class World: Codable {
     // make sure that rooms ID == index in rooms array
     var rooms = [Room]()
     var doors = [Door]()
@@ -43,6 +43,43 @@ class World {
         rooms[3] = rooms[3].addItem(Item(name: "Green Key", description: "Green key."))
         
         doors.append(Door.createDoor(between: rooms[2], facing: .NORTH, to: rooms[5], itemToOpen: Item(name: "Skeleton Key", description: "")))
+    }
+    
+    func saveGame() -> Bool {
+        do {
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = .prettyPrinted
+            let data = try encoder.encode(self)
+            
+            if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+                
+                let fileURL = dir.appendingPathComponent("taSave.json")
+                print("attempting save to: \(fileURL)")
+                //writing
+                try data.write(to: fileURL, options: .atomic)
+                return true
+            } else {
+                return false
+            }
+        } catch {
+            print("Error: \(error)")
+            return false
+        }
+    }
+    
+    static func loadGame(from url: URL) -> World? {
+        var world: World? = nil
+        print("attempting load from: \(url)")
+        
+        do {
+            let decoder = JSONDecoder()
+            let data = try Data(contentsOf: url)
+            world = try? decoder.decode(World.self, from: data)
+        } catch {
+            print("Error: \(error)")
+        }
+        
+        return world
     }
     
     func connectRoomFrom(room: Room, using direction: Direction, to room2: Room, bidirectional: Bool = true) {
@@ -95,7 +132,7 @@ class World {
     }
 }
 
-struct Room {
+struct Room: Codable {
     let id: Int
     var exits = [Direction: Int]()
     let name: String
@@ -136,7 +173,7 @@ struct Room {
     }
 }
 
-struct Item: Equatable {
+struct Item: Equatable, Codable {
     static func == (lhs: Item, rhs: Item) -> Bool {
         return lhs.name == rhs.name
     }
@@ -146,7 +183,7 @@ struct Item: Equatable {
 }
 
 // when you open a door, it creates a new connection
-struct Door: Equatable {
+struct Door: Equatable, Codable {
     let betweenRooms: [Int: Direction]
     var requiresItemToOpen: Item?
     
@@ -187,7 +224,7 @@ struct Door: Equatable {
     }
 }
 
-enum Direction: String {
+enum Direction: String, Codable {
     case NORTH
     case SOUTH
     case EAST

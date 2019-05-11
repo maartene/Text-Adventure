@@ -13,6 +13,7 @@
 		DE003E252269EBD2006BF1F2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE003E232269EBD2006BF1F2 /* Main.storyboard */; };
 		DE003E312269EBD2006BF1F2 /* Text_AdventureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE003E302269EBD2006BF1F2 /* Text_AdventureTests.swift */; };
 		DE003E3D226A5443006BF1F2 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE003E3C226A5443006BF1F2 /* Parser.swift */; };
+		DE288A5022875C8800B5C48D /* defaultWorld.json in Resources */ = {isa = PBXBuildFile; fileRef = DE288A4F22875C8800B5C48D /* defaultWorld.json */; };
 		DE70EB4A22746C0A0076C503 /* template.html in Resources */ = {isa = PBXBuildFile; fileRef = DE70EB4922746C0A0076C503 /* template.html */; };
 		DEE467B1226AF2A500C78DD3 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE467B0226AF2A500C78DD3 /* Formatter.swift */; };
 		DEE467B3226C8BB600C78DD3 /* Lexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE467B2226C8BB600C78DD3 /* Lexer.swift */; };
@@ -42,6 +43,7 @@
 		DE003E302269EBD2006BF1F2 /* Text_AdventureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text_AdventureTests.swift; sourceTree = "<group>"; };
 		DE003E322269EBD2006BF1F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DE003E3C226A5443006BF1F2 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
+		DE288A4F22875C8800B5C48D /* defaultWorld.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = defaultWorld.json; sourceTree = "<group>"; };
 		DE70EB4922746C0A0076C503 /* template.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = template.html; sourceTree = "<group>"; };
 		DEE467B0226AF2A500C78DD3 /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		DEE467B2226C8BB600C78DD3 /* Lexer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lexer.swift; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 		DE003E1C2269EBD0006BF1F2 /* Text Adventure */ = {
 			isa = PBXGroup;
 			children = (
+				DE288A4E22875C7300B5C48D /* Data */,
 				DE7B7440227483F7002926E4 /* View */,
 				DE003E3B226A50B7006BF1F2 /* Model */,
 				DE003E1D2269EBD0006BF1F2 /* AppDelegate.swift */,
@@ -118,6 +121,14 @@
 				DEE467B4226CFE6D00C78DD3 /* World.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		DE288A4E22875C7300B5C48D /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				DE288A4F22875C8800B5C48D /* defaultWorld.json */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 		DE7B7440227483F7002926E4 /* View */ = {
@@ -212,6 +223,7 @@
 			files = (
 				DE003E222269EBD2006BF1F2 /* Assets.xcassets in Resources */,
 				DE70EB4A22746C0A0076C503 /* template.html in Resources */,
+				DE288A5022875C8800B5C48D /* defaultWorld.json in Resources */,
 				DE003E252269EBD2006BF1F2 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

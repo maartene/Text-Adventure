@@ -17,7 +17,6 @@ class ViewController: NSViewController, NSWindowDelegate {
     
     var parser = Parser()
     var formatter: Formatter!
-    var world = World()
     
     @IBAction func onCommandEnterButtonClicked(_ sender: Any) {
         if commandTextField.stringValue.count > 0 {
@@ -33,7 +32,15 @@ class ViewController: NSViewController, NSWindowDelegate {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        parser.world = world
+        //parser.world = World()
+        if let defaultWorldURL = Bundle.main.path(forResource: "defaultWorld", ofType: "json") {
+            let url = URL(fileURLWithPath: defaultWorldURL)
+            print("Loading default world.")
+            parser.world = World.loadGame(from: url)
+        } else {
+            print("Initiazing default world.")
+            parser.world = World()
+        }
     }
 
     override var representedObject: Any? {

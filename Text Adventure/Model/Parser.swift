@@ -61,6 +61,10 @@ struct Parser {
             return open()
         case Verb.INVENTORY:
             return inventory()
+        case Verb.SAVE:
+            return saveGame()
+        case Verb.LOAD:
+            return loadGame()
         case Verb.QUIT:
             NSApplication.shared.terminate(nil)
             return "<H2>Good Bye!</H2>"
@@ -135,9 +139,9 @@ struct Parser {
     }
     
     func help() -> String {
-        var result = "\nCommands: \n"
+        var result = "\n<H3>Commands:</H3>"
         Verb.allCases.forEach {
-            result += $0.rawValue + "\n"
+            result += "<STRONG>\($0.rawValue)</STRONG>   " + $0.explanation + "\n"
         }
         result += "\n"
         return result
@@ -153,6 +157,33 @@ struct Parser {
             result += "Nothing."
         }
         result += "\n"
+        return result
+    }
+    
+    func saveGame() -> String {
+        if world.saveGame() {
+            return "Save succesfull!"
+        } else {
+            return "<WARNING>Failed to save.</WARNING>"
+        }
+    }
+    
+    mutating func loadGame() -> String {
+        var result = ""
+        
+        guard let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            return "<DUBUG>Failed to get document directory.</DEBUG>"
+        }
+            
+        let fileURL = dir.appendingPathComponent("taSave.json")
+        
+        if let newWorld = World.loadGame(from: fileURL) {
+            world = newWorld
+            result += "Succesfully loaded world."
+            result += describeRoom()
+        } else {
+            result += "<WARNING>Could not load game.</WARNING>"
+        }
         return result
     }
     
@@ -216,6 +247,8 @@ enum Verb: String, CaseIterable {
     case ABOUT
     case INVENTORY
     case QUIT
+    case SAVE
+    case LOAD
     
     func expectNoun() -> Bool
     {
@@ -230,8 +263,33 @@ enum Verb: String, CaseIterable {
             return false
         case .QUIT:
             return false
+        case .SAVE:
+            return false
+        case .LOAD:
+            return false
         default:
             return true
+        }
+    }
+    
+    var explanation: String {
+        get {
+            var result = ""
+            switch self {
+            case .HELP:
+                result += "Shows a list of commands."
+            case .GO:
+                result += "Go in a direction (NORTH, SOUTH, EAST, WEST)"
+            default:
+                result += ""
+            }
+            if expectNoun() {
+                result += " use: <STRONG>\(self) [NOUN]</STRONG>"
+            } else {
+                result += " use: <STRONG>\(self)</STRONG>"
+            }
+            
+            return result
         }
     }
 }

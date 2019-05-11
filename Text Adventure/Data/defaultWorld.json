@@ -1,0 +1,108 @@
+{
+    "doors" : [
+        {
+            "betweenRooms" : {
+                "2" : "NORTH",
+                "5" : "SOUTH"
+            },
+            "requiresItemToOpen" : {
+                "name" : "Skeleton Key",
+                "description" : ""
+            }
+        }
+    ],
+    "rooms" : [
+        {
+            "id" : 0,
+            "exits" : [
+                "EAST",
+                1
+            ],
+            "items" : [
+                
+            ],
+            "name" : "Small Cupboard",
+            "description" : "You find yourself in a small cupboard. There are some empty shelves nearby. The only light eminates from the crack between the floor and the door."
+        },
+        {
+            "id" : 1,
+            "exits" : [
+                "SOUTH",
+                4,
+                "EAST",
+                2,
+                "WEST",
+                0
+            ],
+            "items" : [
+                
+            ],
+            "name" : "Main Hall",
+            "description" : "A slightly larger hallway. A skylight provides illumination, making your wonder what is better: not seeing anything because of absense of light or not seeing anything because there simply is nothing to see?"
+        },
+        {
+            "id" : 2,
+            "exits" : [
+                "SOUTH",
+                3,
+                "WEST",
+                1
+            ],
+            "items" : [
+                
+            ],
+            "name" : "Bedroom",
+            "description" : "This appears to be the master bedroom."
+        },
+        {
+            "id" : 3,
+            "exits" : [
+                "NORTH",
+                2,
+                "WEST",
+                4
+            ],
+            "items" : [
+                {
+                    "name" : "Skeleton Key",
+                    "description" : "Bone made key."
+                },
+                {
+                    "name" : "Green Key",
+                    "description" : "Green key."
+                }
+            ],
+            "name" : "East corridor",
+            "description" : "You are in a tight corridor. There are some storage shelves left of you."
+        },
+        {
+            "id" : 4,
+            "exits" : [
+                "NORTH",
+                1,
+                "EAST",
+                3
+            ],
+            "items" : [
+                
+            ],
+            "name" : "South corridor",
+            "description" : "You are in a tight corridor. A ceiling window provides some light around you."
+        },
+        {
+            "id" : 5,
+            "exits" : [
+                
+            ],
+            "items" : [
+                
+            ],
+            "name" : "Secret Stash",
+            "description" : "Congratulations! You found the secret stash!"
+        }
+    ],
+    "currentRoomIndex" : 0,
+    "inventory" : [
+        
+    ]
+}
