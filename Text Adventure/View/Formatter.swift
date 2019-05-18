@@ -34,16 +34,18 @@ struct Formatter {
     func format(text: String) -> NSAttributedString {
         var inlineStyledText = text
         inlineStyledText = inlineStyledText.replacingOccurrences(of: "\n", with: "<br>")
-        inlineStyledText = inlineStyledText.replacingOccurrences(of: "<EXIT>", with: "<span style=\"color: green;\">")
+        inlineStyledText = inlineStyledText.replacingOccurrences(of: "<EXIT>", with: "<span class=\"exit\">")
         inlineStyledText = inlineStyledText.replacingOccurrences(of: "</EXIT>", with: "</span>")
-        inlineStyledText = inlineStyledText.replacingOccurrences(of: "<ITEM>", with: "<span style=\"color: orange;\">")
+        inlineStyledText = inlineStyledText.replacingOccurrences(of: "<ITEM>", with: "<span class=\"item\">")
         inlineStyledText = inlineStyledText.replacingOccurrences(of: "</ITEM>", with: "</span>")
-        inlineStyledText = inlineStyledText.replacingOccurrences(of: "<ACTION>", with: "<span style=\"color: yellow;\">")
+        inlineStyledText = inlineStyledText.replacingOccurrences(of: "<ACTION>", with: "<span class=\"action\">")
         inlineStyledText = inlineStyledText.replacingOccurrences(of: "</ACTION>", with: "</span>")
-        inlineStyledText = inlineStyledText.replacingOccurrences(of: "<WARNING>", with: "<span style=\"color: orange;\">")
+        inlineStyledText = inlineStyledText.replacingOccurrences(of: "<WARNING>", with: "<span class=\"warning\">")
         inlineStyledText = inlineStyledText.replacingOccurrences(of: "</WARNING>", with: "</span>")
-        inlineStyledText = inlineStyledText.replacingOccurrences(of: "<DEBUG>", with: "<span style=\"color: purple;\">")
+        inlineStyledText = inlineStyledText.replacingOccurrences(of: "<DEBUG>", with: "<span class=\"debug\">")
         inlineStyledText = inlineStyledText.replacingOccurrences(of: "</DEBUG>", with: "</span>")
+        
+        print(inlineStyledText)
         
         let htmlText = templateHTML.replacingOccurrences(of: "[[RESULT]]", with: inlineStyledText)
         

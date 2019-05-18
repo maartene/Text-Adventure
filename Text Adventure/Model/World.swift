@@ -119,13 +119,13 @@ class World: Codable {
         return doors.filter { $0.betweenRooms.keys.contains(room.id) }
     }
     
-    func open() -> Bool {
+    func open() -> Door.DoorResult {
         let doorsInCurrentRoom = doorsInRoom(room: currentRoom)
-        var result = false
+        var result = Door.DoorResult.doorDidOpen
         if doorsInCurrentRoom.count > 0 {
             doorsInCurrentRoom.forEach {
                 result = $0.open(world: self)
-                if result { doors.remove(at: doors.firstIndex(of: $0)!) }
+                if result == .doorDidOpen { doors.remove(at: doors.firstIndex(of: $0)!) }
             }
         }
         return result
@@ -178,12 +178,21 @@ struct Item: Equatable, Codable {
         return lhs.name == rhs.name
     }
     
+    func canBe(partOfName: String) -> Bool {
+        return name.uppercased().contains(partOfName.uppercased())
+    }
+    
     let name: String
     let description: String
 }
 
 // when you open a door, it creates a new connection
 struct Door: Equatable, Codable {
+    enum DoorResult: Equatable {
+        case doorDidOpen
+        case missingItemToOpen(item: Item)
+    }
+    
     let betweenRooms: [Int: Direction]
     var requiresItemToOpen: Item?
     
@@ -200,7 +209,7 @@ struct Door: Equatable, Codable {
         }
     }
     
-    func open(world: World) -> Bool {
+    func open(world: World) -> DoorResult {
         if canOpen(world: world) {
             let roomIDs = Array<Int>(betweenRooms.keys)
             world.connectRoomFrom(roomId: roomIDs[0], using: betweenRooms[roomIDs[0]]!, to: roomIDs[1], bidirectional: true)
@@ -209,9 +218,9 @@ struct Door: Equatable, Codable {
                 world.inventory.remove(at: world.inventory.firstIndex(of: itemToOpen)!)
             }
             
-            return true
+            return .doorDidOpen
         } else {
-            return false
+            return .missingItemToOpen(item: requiresItemToOpen!)
         }
     }
     

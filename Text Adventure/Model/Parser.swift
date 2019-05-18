@@ -51,12 +51,16 @@ struct Parser {
         switch newCommand.verb {
         case Verb.HELP:
             return help()
+        case Verb.ABOUT:
+            return about()
         case Verb.GO:
             return go(direction: newCommand.noun!)
         case Verb.LOOK:
             return describeRoom()
         case Verb.TAKE:
             return take(itemName: newCommand.noun!)
+        case Verb.LOOKAT:
+            return lookat(itemName: newCommand.noun!)
         case Verb.OPEN:
             return open()
         case Verb.INVENTORY:
@@ -72,6 +76,33 @@ struct Parser {
         default:
             // echo what comes in
             return "<DEBUG>Received command: \(newCommand)</DEBUG>\n"
+        }
+    }
+    
+    func about() -> String {
+        return """
+            This is a small text adventure written in Swift. I Hope you have fun playing it.
+        &copy; <a href="https://www.thedreamweb.eu/">thedreamweb.eu</a> / Maarten Engels, 2019. MIT license.
+        See <a href="https://github.com/maartene/Text-Adventure.git">https://github.com/maartene/Text-Adventure.git</a> for more information.
+        """
+    }
+    
+    func lookat(itemName: String) -> String {
+        // check whether there is an item in the room called itemName
+        var itemsInRoomAndInventory = world.currentRoom.items
+        itemsInRoomAndInventory.append(contentsOf: world.inventory)
+        
+        let possibleItems = itemsInRoomAndInventory.filter { item in item.canBe(partOfName: itemName) }
+        
+        switch possibleItems.count {
+        case 0:
+            return "<WARNING>There is no </WARNING> <ITEM>\(itemName)</ITEM> <WARNING> in the current room.</WARNING>"
+        case 1:
+            return possibleItems.first?.description ?? "<DEBUG>Unexpected nil value in \(possibleItems)</DEBUG>"
+        case 2...:
+            return "<WARNING>More than one item contains </WARNING><ITEM>\(itemName)</ITEM>. <WARNING>Please be more specific.</WARNING>"
+        default:
+            return "<DEBUG>Negative item count should not be possible.</DEBUG>"
         }
     }
     
@@ -129,12 +160,13 @@ struct Parser {
             return "<WARNING>There is no closed door here.</WARNING>\n"
         }
         
-        if world.open() {
+        switch world.open() {
+        case .doorDidOpen:
             var result = "<ACTION>You opened the door.</ACTION>\n"
             result += describeRoom()
             return result
-        } else {
-            return "<WARNING>You could not open the door.</WARNING>\n"
+        case let .missingItemToOpen(item):
+            return "<WARNING>You need an \(item.name) to open the door.</WARNING>\n"
         }
     }
     
@@ -280,6 +312,24 @@ enum Verb: String, CaseIterable {
                 result += "Shows a list of commands."
             case .GO:
                 result += "Go in a direction (NORTH, SOUTH, EAST, WEST)"
+            case .ABOUT:
+                result += "Information about this game."
+            case .LOOK:
+                result += "Look around in the current room."
+            case .INVENTORY:
+                result += "Show your inventory."
+            case .QUIT:
+                result += "Quit the game (instantanious - no save game warning!)"
+            case .OPEN:
+                result += "Open a door or container (chest/box/safe/...)."
+            case .LOOKAT:
+                result += "Look at an object in the room or in your inventory."
+            case .TAKE:
+                result += "Pick up an item into your inventory."
+            case .SAVE:
+                result += "Save your current progress."
+            case .LOAD:
+                result += "Load saved game."
             default:
                 result += ""
             }
