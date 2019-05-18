@@ -65,6 +65,8 @@ struct Parser {
             return open()
         case Verb.INVENTORY:
             return inventory()
+        case Verb.USE:
+            return use(itemName: newCommand.noun!)
         case Verb.SAVE:
             return saveGame()
         case Verb.LOAD:
@@ -106,6 +108,35 @@ struct Parser {
             return "<WARNING>More than one item contains </WARNING><ITEM>\(itemName)</ITEM>. <WARNING>Please be more specific.</WARNING>"
         default:
             return "<DEBUG>Negative item count should not be possible.</DEBUG>"
+        }
+    }
+    
+    func use(itemName: String) -> String {
+        // get a list of all items in inventory that somehow have the itemName in it's name
+        let potentialItems = world.inventory.filter { item in item.name.uppercased().contains(itemName.uppercased()) }
+        
+        switch potentialItems.count {
+        case 0:
+            return "<WARNING>You don't carry an item with name: <ITEM>\(itemName).</WARNING>"
+        case 1:
+            // we found an item
+            guard let item = potentialItems.first else {
+                return "<DEBUG>For some reason a nil value for found for the item.</DEBUG>"
+            }
+            
+            switch world.use(item: item) {
+            case .noEffect:
+                return "You try and use the <ITEM>\(item.name)</ITEM>, but it has no effect."
+            case .itemHadEffect:
+                return "You used the \(item.name). It has the following effect: \(item.effect!)." + describeRoom()
+            case .itemHadNoEffect:
+                return "This does not seem to be the right place to use the \(item.name)."
+            }
+
+        case 2...:
+            return "<WARNING>More than one item contains the name <ITEM>\(itemName). Please be more specific.</WARNING>"
+        default:
+            return "<DEBUG>A negative value of potentialItems.count was observed.</DEBUG>"
         }
     }
     
@@ -232,10 +263,14 @@ struct Parser {
     
     func describeRoom() -> String {
         var result = "\n"
-        result += showDescription()
-        result += showExits()
-        result += showItems()
-        result += showDoors()
+        if world.currentRoom.isDark {
+            result += "It's too dark to see."
+        } else {
+            result += showDescription()
+            result += showExits()
+            result += showItems()
+            result += showDoors()
+        }
         return result
     }
     
@@ -284,6 +319,7 @@ enum Verb: String, CaseIterable {
     case QUIT
     case SAVE
     case LOAD
+    case USE
     
     func expectNoun() -> Bool
     {
@@ -329,6 +365,8 @@ enum Verb: String, CaseIterable {
                 result += "Look at an object in the room or in your inventory."
             case .TAKE:
                 result += "Pick up an item into your inventory."
+            case .USE:
+                result += "Use an item."
             case .SAVE:
                 result += "Save your current progress."
             case .LOAD:

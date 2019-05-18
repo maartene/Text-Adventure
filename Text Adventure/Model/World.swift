@@ -10,14 +10,29 @@ import Foundation
 import AppKit
 
 class World: Codable {
+    enum WorldKeys: CodingKey {
+        case rooms
+        case doors
+        case currentRoomIndex
+        case inventory
+    }
+    
+    enum WorldErrors: Error {
+        case roomWithIndexDoesNotExist
+    }
+    
     // make sure that rooms ID == index in rooms array
-    var rooms = [Room]()
+    var rooms = [Int: Room]()
+    
     var doors = [Door]()
     var currentRoomIndex = 0
     
     var currentRoom: Room {
         get {
-            return rooms[currentRoomIndex]
+            guard let room = rooms[currentRoomIndex] else {
+                fatalError("CurrentRoomIndex has a value (\(currentRoomIndex)) for which no room could be found.")
+            }
+            return room
         }
     }
     
@@ -26,25 +41,55 @@ class World: Codable {
     init() {
         // setup a test world with a couple of (connected) rooms.
         // this will probably be read from a file later.
-        rooms.append(Room(id: 0, name: "Small Cupboard", description: "You find yourself in a small cupboard. There are some empty shelves nearby. The only light eminates from the crack between the floor and the door."))
-        rooms.append(Room(id: 1, name: "Main Hall", description: "A slightly larger hallway. A skylight provides illumination, making your wonder what is better: not seeing anything because of absense of light or not seeing anything because there simply is nothing to see?"))
-        rooms.append(Room(id: 2, name: "Bedroom", description: "This appears to be the master bedroom."))
-        rooms.append(Room(id: 3, name: "East corridor", description: "You are in a tight corridor. There are some storage shelves left of you."))
-        rooms.append(Room(id: 4, name: "South corridor", description: "You are in a tight corridor. A ceiling window provides some light around you."))
-        rooms.append(Room(id: 5, name: "Secret Stash", description: "Congratulations! You found the secret stash!"))
+        addRoom(id: 0, name: "Small Cupboard", description: "You find yourself in a small cupboard. There are some empty shelves nearby. The only light eminates from the crack between the floor and the door.")
+        addRoom(id: 1, name: "Main Hall", description: "A slightly larger hallway. A skylight provides illumination, making your wonder what is better: not seeing anything because of absense of light or not seeing anything because there simply is nothing to see?")
+        addRoom(id: 2, name: "Bedroom", description: "This appears to be the master bedroom.")
+        addRoom(id: 3, name: "East corridor", description: "You are in a tight corridor. There are some storage shelves left of you.")
+        addRoom(id: 4, name: "South corridor", description: "You are in a tight corridor. A ceiling window provides some light around you.")
+        addRoom(id: 5, name: "Secret Stash", description: "Congratulations! You found the secret stash!")
         
-        connectRoomFrom(room: rooms[0], using: .EAST, to: rooms[1])
-        connectRoomFrom(room: rooms[1], using: .EAST, to: rooms[2])
-        connectRoomFrom(room: rooms[2], using: .SOUTH, to: rooms[3])
-        connectRoomFrom(room: rooms[3], using: .WEST, to: rooms[4])
-        connectRoomFrom(room: rooms[4], using: .NORTH, to: rooms[1])
+        connectRoomFrom(room: rooms[0]!, using: .EAST, to: rooms[1]!)
+        connectRoomFrom(room: rooms[1]!, using: .EAST, to: rooms[2]!)
+        connectRoomFrom(room: rooms[2]!, using: .SOUTH, to: rooms[3]!)
+        connectRoomFrom(room: rooms[3]!, using: .WEST, to: rooms[4]!)
+        connectRoomFrom(room: rooms[4]!, using: .NORTH, to: rooms[1]!)
         
-        rooms[3] = rooms[3].addItem(Item(name: "Skeleton Key", description: "Bone made key."))
-        rooms[3] = rooms[3].addItem(Item(name: "Green Key", description: "Green key."))
+        rooms[3] = rooms[3]!.addItem(Item(name: "Skeleton Key", description: "Bone made key."))
+        rooms[3] = rooms[3]!.addItem(Item(name: "Green Key", description: "Green key."))
         
-        doors.append(Door.createDoor(between: rooms[2], facing: .NORTH, to: rooms[5], itemToOpen: Item(name: "Skeleton Key", description: "")))
+        doors.append(Door.createDoor(between: rooms[2]!, facing: .NORTH, to: rooms[5]!, itemToOpen: Item(name: "Skeleton Key", description: "")))
     }
     
+    required init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: WorldKeys.self)
+        
+        let roomsArray = try values.decode([Room].self, forKey: .rooms)
+        roomsArray.forEach { room in
+            rooms[room.id] = room
+        }
+        
+        //print(rooms)
+        
+        doors = try values.decode([Door].self, forKey: .doors)
+        inventory = try values.decode([Item].self, forKey: .inventory)
+        currentRoomIndex = try values.decode(Int.self, forKey: .currentRoomIndex)
+        
+        guard currentRoomIndex >= 0 && currentRoomIndex < rooms.count else {
+            throw WorldErrors.roomWithIndexDoesNotExist
+        }
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: WorldKeys.self)
+        
+        let roomsArray = Array(rooms.values)
+        try container.encode(roomsArray, forKey: .rooms)
+        try container.encode(doors, forKey: .doors)
+        try container.encode(inventory, forKey: .inventory)
+        try container.encode(currentRoomIndex, forKey: .currentRoomIndex)
+    }
+    
+    // MARK: Save and load game
     func saveGame() -> Bool {
         do {
             let encoder = JSONEncoder()
@@ -74,12 +119,18 @@ class World: Codable {
         do {
             let decoder = JSONDecoder()
             let data = try Data(contentsOf: url)
+            print(data)
             world = try? decoder.decode(World.self, from: data)
         } catch {
             print("Error: \(error)")
         }
         
         return world
+    }
+    
+    // MARK: world creation functions
+    func addRoom(id: Int, name: String, description: String) {
+        rooms[id] = Room(id: id, name: name, description: description)
     }
     
     func connectRoomFrom(room: Room, using direction: Direction, to room2: Room, bidirectional: Bool = true) {
@@ -91,11 +142,14 @@ class World: Codable {
     }
     
     func connectRoomFrom(roomId: Int, using direction: Direction, to room2Id: Int, bidirectional: Bool = true) {
-        let room1 = rooms[roomId]
-        let room2 = rooms[room2Id]
+        guard let room1 = rooms[roomId], let room2 = rooms[room2Id] else {
+            print("At least one room could not be found.")
+            return
+        }
         connectRoomFrom(room: room1, using: direction, to: room2, bidirectional: bidirectional)
     }
     
+    // MARK: Commands
     func go(direction: Direction) -> Bool {
         if currentRoom.exits.keys.contains(direction) {
             currentRoomIndex = currentRoom.exits[direction]!
@@ -115,10 +169,6 @@ class World: Codable {
         }
     }
     
-    func doorsInRoom(room: Room) -> [Door] {
-        return doors.filter { $0.betweenRooms.keys.contains(room.id) }
-    }
-    
     func open() -> Door.DoorResult {
         let doorsInCurrentRoom = doorsInRoom(room: currentRoom)
         var result = Door.DoorResult.doorDidOpen
@@ -130,106 +180,28 @@ class World: Codable {
         }
         return result
     }
-}
-
-struct Room: Codable {
-    let id: Int
-    var exits = [Direction: Int]()
-    let name: String
-    let description: String
-    var items = [Item]()
     
-    init(id: Int, name: String, description: String, exits: [Direction: Int]? = nil) {
-        self.id = id
-        self.description = description
-        self.name = name
-        
-        if let exits = exits {
-            self.exits = exits
-        }
-    }
-    
-    func addExit(direction: Direction, roomID: Int) -> Room {
-        var newExits = [direction: roomID]
-        newExits.merge(self.exits) { (_, new) in new }
-        return Room(id: self.id, name: self.name, description: self.description, exits: newExits)
-    }
-    
-    func addItem(_ item: Item) -> Room {
-        var result = self
-        result.items.append(item)
-        return result
-    }
-    
-    func removeItem(_ item: Item) -> Room {
-        var result = self
-        
-        guard let index = result.items.firstIndex(of: item) else {
-                fatalError("Room \(self) does not contain an item \(item)")
+    func use(item: Item) -> Item.ItemResult {
+        guard let effect = item.effect else {
+            return Item.ItemResult.noEffect
         }
         
-        result.items.remove(at: index)
-        return result
-    }
-}
-
-struct Item: Equatable, Codable {
-    static func == (lhs: Item, rhs: Item) -> Bool {
-        return lhs.name == rhs.name
-    }
-    
-    func canBe(partOfName: String) -> Bool {
-        return name.uppercased().contains(partOfName.uppercased())
-    }
-    
-    let name: String
-    let description: String
-}
-
-// when you open a door, it creates a new connection
-struct Door: Equatable, Codable {
-    enum DoorResult: Equatable {
-        case doorDidOpen
-        case missingItemToOpen(item: Item)
-    }
-    
-    let betweenRooms: [Int: Direction]
-    var requiresItemToOpen: Item?
-    
-    static func createDoor(between room1: Room, facing: Direction, to room2: Room, itemToOpen: Item? = nil) -> Door {
-        let betweenRooms = [room1.id: facing, room2.id: facing.opposite()]
-        return Door(betweenRooms: betweenRooms, requiresItemToOpen: itemToOpen)
-    }
-    
-    func canOpen(world: World) -> Bool {
-        if let itemToOpen = requiresItemToOpen {
-            return world.inventory.contains(itemToOpen)
-        } else {
-            return true
-        }
-    }
-    
-    func open(world: World) -> DoorResult {
-        if canOpen(world: world) {
-            let roomIDs = Array<Int>(betweenRooms.keys)
-            world.connectRoomFrom(roomId: roomIDs[0], using: betweenRooms[roomIDs[0]]!, to: roomIDs[1], bidirectional: true)
-            
-            if let itemToOpen = requiresItemToOpen {
-                world.inventory.remove(at: world.inventory.firstIndex(of: itemToOpen)!)
+        switch effect {
+        case .light:
+            if currentRoom.isDark {
+                var room = currentRoom
+                room.isDark = false
+                rooms[currentRoomIndex] = room
+                return .itemHadEffect
+            } else {
+                return .itemHadNoEffect
             }
-            
-            return .doorDidOpen
-        } else {
-            return .missingItemToOpen(item: requiresItemToOpen!)
         }
     }
     
-    func direction(from room: Room) -> Direction {
-        if let dir = betweenRooms[room.id] {
-            return dir
-        } else {
-            fatalError("There is no door in room \(room).")
-        }
+    // MARK: Command helpers
+    func doorsInRoom(room: Room) -> [Door] {
+        return doors.filter { $0.betweenRooms.keys.contains(room.id) }
     }
 }
 

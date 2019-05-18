@@ -45,7 +45,7 @@ struct Formatter {
         inlineStyledText = inlineStyledText.replacingOccurrences(of: "<DEBUG>", with: "<span class=\"debug\">")
         inlineStyledText = inlineStyledText.replacingOccurrences(of: "</DEBUG>", with: "</span>")
         
-        print(inlineStyledText)
+        //print(inlineStyledText)
         
         let htmlText = templateHTML.replacingOccurrences(of: "[[RESULT]]", with: inlineStyledText)
         

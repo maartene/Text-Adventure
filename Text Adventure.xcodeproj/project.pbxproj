@@ -13,6 +13,9 @@
 		DE003E252269EBD2006BF1F2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE003E232269EBD2006BF1F2 /* Main.storyboard */; };
 		DE003E312269EBD2006BF1F2 /* Text_AdventureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE003E302269EBD2006BF1F2 /* Text_AdventureTests.swift */; };
 		DE003E3D226A5443006BF1F2 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE003E3C226A5443006BF1F2 /* Parser.swift */; };
+		DE0F048922907D5D00A690A6 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0F048822907D5D00A690A6 /* Room.swift */; };
+		DE0F048B22907D7500A690A6 /* Door.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0F048A22907D7500A690A6 /* Door.swift */; };
+		DE0F048D22907D8600A690A6 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0F048C22907D8600A690A6 /* Item.swift */; };
 		DE288A5022875C8800B5C48D /* defaultWorld.json in Resources */ = {isa = PBXBuildFile; fileRef = DE288A4F22875C8800B5C48D /* defaultWorld.json */; };
 		DE70EB4A22746C0A0076C503 /* template.html in Resources */ = {isa = PBXBuildFile; fileRef = DE70EB4922746C0A0076C503 /* template.html */; };
 		DEE467B1226AF2A500C78DD3 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE467B0226AF2A500C78DD3 /* Formatter.swift */; };
@@ -43,6 +46,9 @@
 		DE003E302269EBD2006BF1F2 /* Text_AdventureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text_AdventureTests.swift; sourceTree = "<group>"; };
 		DE003E322269EBD2006BF1F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DE003E3C226A5443006BF1F2 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
+		DE0F048822907D5D00A690A6 /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
+		DE0F048A22907D7500A690A6 /* Door.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Door.swift; sourceTree = "<group>"; };
+		DE0F048C22907D8600A690A6 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		DE288A4F22875C8800B5C48D /* defaultWorld.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = defaultWorld.json; sourceTree = "<group>"; };
 		DE70EB4922746C0A0076C503 /* template.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = template.html; sourceTree = "<group>"; };
 		DEE467B0226AF2A500C78DD3 /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
@@ -119,6 +125,9 @@
 				DE003E3C226A5443006BF1F2 /* Parser.swift */,
 				DEE467B2226C8BB600C78DD3 /* Lexer.swift */,
 				DEE467B4226CFE6D00C78DD3 /* World.swift */,
+				DE0F048822907D5D00A690A6 /* Room.swift */,
+				DE0F048A22907D7500A690A6 /* Door.swift */,
+				DE0F048C22907D8600A690A6 /* Item.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -243,7 +252,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				DEE467B5226CFE6D00C78DD3 /* World.swift in Sources */,
+				DE0F048D22907D8600A690A6 /* Item.swift in Sources */,
+				DE0F048B22907D7500A690A6 /* Door.swift in Sources */,
 				DE003E202269EBD0006BF1F2 /* ViewController.swift in Sources */,
+				DE0F048922907D5D00A690A6 /* Room.swift in Sources */,
 				DE003E1E2269EBD0006BF1F2 /* AppDelegate.swift in Sources */,
 				DEE467B1226AF2A500C78DD3 /* Formatter.swift in Sources */,
 				DE003E3D226A5443006BF1F2 /* Parser.swift in Sources */,

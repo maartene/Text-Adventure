@@ -22,7 +22,8 @@
                 
             ],
             "name" : "Small Cupboard",
-            "description" : "You find yourself in a small cupboard. There are some empty shelves nearby. The only light eminates from the crack between the floor and the door."
+            "description" : "You find yourself in a small cupboard. There are some empty shelves nearby. The only light eminates from the crack between the floor and the door.",
+            "isDark" : true
         },
         {
             "id" : 1,
@@ -38,7 +39,8 @@
                 
             ],
             "name" : "Main Hall",
-            "description" : "A slightly larger hallway. A skylight provides illumination, making your wonder what is better: not seeing anything because of absense of light or not seeing anything because there simply is nothing to see?"
+            "description" : "A slightly larger hallway. A skylight provides illumination, making your wonder what is better: not seeing anything because of absense of light or not seeing anything because there simply is nothing to see?",
+            "isDark" : false
         },
         {
             "id" : 2,
@@ -52,7 +54,8 @@
                 
             ],
             "name" : "Bedroom",
-            "description" : "This appears to be the master bedroom."
+            "description" : "This appears to be the master bedroom.",
+            "isDark" : false
         },
         {
             "id" : 3,
@@ -73,7 +76,8 @@
                 }
             ],
             "name" : "East corridor",
-            "description" : "You are in a tight corridor. There are some storage shelves left of you."
+            "description" : "You are in a tight corridor. There are some storage shelves left of you.",
+            "isDark" : false
         },
         {
             "id" : 4,
@@ -87,7 +91,8 @@
                 
             ],
             "name" : "South corridor",
-            "description" : "You are in a tight corridor. A ceiling window provides some light around you."
+            "description" : "You are in a tight corridor. A ceiling window provides some light around you.",
+            "isDark" : false
         },
         {
             "id" : 5,
@@ -98,11 +103,17 @@
                 
             ],
             "name" : "Secret Stash",
-            "description" : "Congratulations! You found the secret stash!"
+            "description" : "Congratulations! You found the secret stash!",
+            "isDark" : false
         }
     ],
     "currentRoomIndex" : 0,
     "inventory" : [
+        {
+            "name" : "Lamp",
+            "description" : "An oil lamp. It's filled with fuel.",
+            "effect" : 0
+        }
         
     ]
 }
