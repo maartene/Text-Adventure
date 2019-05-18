@@ -98,7 +98,10 @@ struct Parser {
         case 0:
             return "<WARNING>There is no </WARNING> <ITEM>\(itemName)</ITEM> <WARNING> in the current room.</WARNING>"
         case 1:
-            return possibleItems.first?.description ?? "<DEBUG>Unexpected nil value in \(possibleItems)</DEBUG>"
+            guard let item = possibleItems.first else {
+                return "<DEBUG>Unexpected nil value in \(possibleItems).first</DEBUG>"
+            }
+            return "<ITEM>\(item.name)</ITEM>: \(item.description)"
         case 2...:
             return "<WARNING>More than one item contains </WARNING><ITEM>\(itemName)</ITEM>. <WARNING>Please be more specific.</WARNING>"
         default:
