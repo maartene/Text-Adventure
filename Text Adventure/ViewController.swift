@@ -37,8 +37,10 @@ class ViewController: NSViewController, NSWindowDelegate {
             let url = URL(fileURLWithPath: defaultWorldURL)
             print("Loading default world.")
             parser.world = World.loadGame(from: url)
-        } else {
-            print("Initiazing default world.")
+        }
+        
+        if parser.world == nil {
+            print("Loading of default world failed. Initiazing default world.")
             parser.world = World()
         }
     }
