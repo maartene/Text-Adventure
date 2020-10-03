@@ -20,7 +20,7 @@ struct ContentView: View {
         VStack {
             ScrollView(.vertical , showsIndicators: true) {
                 ForEach(outputText, id: \.self) { text in
-                    formatter.format(text).frame(maxWidth: .infinity, alignment: .leading)
+                    formatter.format(text).frame(maxWidth: .infinity, alignment: Alignment.bottomLeading )
                 }
             }
                 

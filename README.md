@@ -34,6 +34,20 @@ For instance, in a room with one Skeleton Key, all of the following commands pic
 Note: if you have two items in a room, both starting with the word "Green", then you can't pick any up. So be careful.
 
 ## Formatter
-The formatter is based on NSAttributedString feature to parse HTML files. To do so, we parse an HTML template (view/template.html) and embed the strings to format in an string storing HTML. Some custom tags such as <ITEM></ITEM> are used to add inline styling to the returned results.
+The project contains two formatters (conforming to `Formatter` protocol)
+1. AttributedTextFormatter: outputs `NSAttributedString` (for use in AppKit based solutions)
+2. SwiftUIFormatter: outputs SwiftUI `Text` values.
 
-Note: it would be trivial to make the formatter output something else.
+The game currently uses the SwiftUIFormatter.
+
+### AttributedTextFormatter
+The formatter is based on `NSAttributedString` feature to parse HTML files. To do so, we parse an HTML template (`view/template.html`) and embed the strings to format in an string storing HTML. Some custom tags such as `<ITEM></ITEM>` are used to add inline styling to the returned results.
+
+### SwiftUIFormatter
+The formatter parses the provided HTML like text into `TextElement`s (a tree of formatted strings). Then the tree is flattened into an array of `[TextElement]`. Finally, the formatter converts the flattened array into a new SwiftUI `Text` value.
+
+## Notes
+* This project targets macOS 10.14. This means that SwiftUI lacks several features:
+* * Keyboard shortcuts (no enter to send the command)
+* * Automatic scroll to the end of the scrollview.
+Because these features require workarounds and the release of macOS 11 should be imminent, I'm not fixing them for now.. 
