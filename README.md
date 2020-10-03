@@ -9,10 +9,10 @@ Caveat: if your JSON fails to parse correctly, the game will create a default wo
 
 2. Programmatically
 You can also create a constructor/factory that creates instances of World. 
-* * Add instances of type Room to the rooms array.
-* * Use connectRoomFrom(room: using direction: to room:) to connect rooms together.
-* * Add items to rooms using Room.addItem (note this returns a new room)
-* * Add doors by appending Door instances to world.doors.
+* Add instances of type Room to the rooms array.
+* Use connectRoomFrom(room: using direction: to room:) to connect rooms together.
+* Add items to rooms using Room.addItem (note this returns a new room)
+* Add doors by appending Door instances to world.doors.
 
 ## Lexer/Parser
 The lexer translates the sentence in words (seperated by spaces).
