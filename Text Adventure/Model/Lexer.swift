@@ -24,7 +24,7 @@ struct Lexer {
     ]
     
     static func lex(_ string: String) -> [String] {
-        var subStrings = string.split(separator: " ")
+        let subStrings = string.split(separator: " ")
         
         guard subStrings.count > 0 else {
             return [""]

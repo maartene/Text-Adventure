@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		DE003E1E2269EBD0006BF1F2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE003E1D2269EBD0006BF1F2 /* AppDelegate.swift */; };
-		DE003E202269EBD0006BF1F2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE003E1F2269EBD0006BF1F2 /* ViewController.swift */; };
 		DE003E222269EBD2006BF1F2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE003E212269EBD2006BF1F2 /* Assets.xcassets */; };
 		DE003E252269EBD2006BF1F2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE003E232269EBD2006BF1F2 /* Main.storyboard */; };
 		DE003E312269EBD2006BF1F2 /* Text_AdventureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE003E302269EBD2006BF1F2 /* Text_AdventureTests.swift */; };
@@ -16,9 +15,12 @@
 		DE0F048922907D5D00A690A6 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0F048822907D5D00A690A6 /* Room.swift */; };
 		DE0F048B22907D7500A690A6 /* Door.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0F048A22907D7500A690A6 /* Door.swift */; };
 		DE0F048D22907D8600A690A6 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0F048C22907D8600A690A6 /* Item.swift */; };
+		DE1F62D42528476A003FFA99 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1F62D32528476A003FFA99 /* Formatter.swift */; };
+		DE1F62D8252847AC003FFA99 /* SwiftUIFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1F62D7252847AC003FFA99 /* SwiftUIFormatter.swift */; };
 		DE288A5022875C8800B5C48D /* defaultWorld.json in Resources */ = {isa = PBXBuildFile; fileRef = DE288A4F22875C8800B5C48D /* defaultWorld.json */; };
 		DE70EB4A22746C0A0076C503 /* template.html in Resources */ = {isa = PBXBuildFile; fileRef = DE70EB4922746C0A0076C503 /* template.html */; };
-		DEE467B1226AF2A500C78DD3 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE467B0226AF2A500C78DD3 /* Formatter.swift */; };
+		DEB665C92514ABD7007757AC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB665C82514ABD7007757AC /* ContentView.swift */; };
+		DEE467B1226AF2A500C78DD3 /* AttributedTextFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE467B0226AF2A500C78DD3 /* AttributedTextFormatter.swift */; };
 		DEE467B3226C8BB600C78DD3 /* Lexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE467B2226C8BB600C78DD3 /* Lexer.swift */; };
 		DEE467B5226CFE6D00C78DD3 /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE467B4226CFE6D00C78DD3 /* World.swift */; };
 		DEE467B722707C2400C78DD3 /* WorldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE467B622707C2300C78DD3 /* WorldTests.swift */; };
@@ -37,7 +39,6 @@
 /* Begin PBXFileReference section */
 		DE003E1A2269EBD0006BF1F2 /* Text Adventure.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Text Adventure.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE003E1D2269EBD0006BF1F2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		DE003E1F2269EBD0006BF1F2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		DE003E212269EBD2006BF1F2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DE003E242269EBD2006BF1F2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DE003E262269EBD2006BF1F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -49,9 +50,12 @@
 		DE0F048822907D5D00A690A6 /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		DE0F048A22907D7500A690A6 /* Door.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Door.swift; sourceTree = "<group>"; };
 		DE0F048C22907D8600A690A6 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		DE1F62D32528476A003FFA99 /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
+		DE1F62D7252847AC003FFA99 /* SwiftUIFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIFormatter.swift; sourceTree = "<group>"; };
 		DE288A4F22875C8800B5C48D /* defaultWorld.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = defaultWorld.json; sourceTree = "<group>"; };
 		DE70EB4922746C0A0076C503 /* template.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = template.html; sourceTree = "<group>"; };
-		DEE467B0226AF2A500C78DD3 /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
+		DEB665C82514ABD7007757AC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		DEE467B0226AF2A500C78DD3 /* AttributedTextFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedTextFormatter.swift; sourceTree = "<group>"; };
 		DEE467B2226C8BB600C78DD3 /* Lexer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lexer.swift; sourceTree = "<group>"; };
 		DEE467B4226CFE6D00C78DD3 /* World.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = World.swift; sourceTree = "<group>"; };
 		DEE467B622707C2300C78DD3 /* WorldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldTests.swift; sourceTree = "<group>"; };
@@ -100,7 +104,6 @@
 				DE7B7440227483F7002926E4 /* View */,
 				DE003E3B226A50B7006BF1F2 /* Model */,
 				DE003E1D2269EBD0006BF1F2 /* AppDelegate.swift */,
-				DE003E1F2269EBD0006BF1F2 /* ViewController.swift */,
 				DE003E212269EBD2006BF1F2 /* Assets.xcassets */,
 				DE003E232269EBD2006BF1F2 /* Main.storyboard */,
 				DE003E262269EBD2006BF1F2 /* Info.plist */,
@@ -144,7 +147,10 @@
 			isa = PBXGroup;
 			children = (
 				DE70EB4922746C0A0076C503 /* template.html */,
-				DEE467B0226AF2A500C78DD3 /* Formatter.swift */,
+				DEE467B0226AF2A500C78DD3 /* AttributedTextFormatter.swift */,
+				DEB665C82514ABD7007757AC /* ContentView.swift */,
+				DE1F62D32528476A003FFA99 /* Formatter.swift */,
+				DE1F62D7252847AC003FFA99 /* SwiftUIFormatter.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -251,13 +257,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE1F62D42528476A003FFA99 /* Formatter.swift in Sources */,
 				DEE467B5226CFE6D00C78DD3 /* World.swift in Sources */,
 				DE0F048D22907D8600A690A6 /* Item.swift in Sources */,
 				DE0F048B22907D7500A690A6 /* Door.swift in Sources */,
-				DE003E202269EBD0006BF1F2 /* ViewController.swift in Sources */,
 				DE0F048922907D5D00A690A6 /* Room.swift in Sources */,
 				DE003E1E2269EBD0006BF1F2 /* AppDelegate.swift in Sources */,
-				DEE467B1226AF2A500C78DD3 /* Formatter.swift in Sources */,
+				DEB665C92514ABD7007757AC /* ContentView.swift in Sources */,
+				DE1F62D8252847AC003FFA99 /* SwiftUIFormatter.swift in Sources */,
+				DEE467B1226AF2A500C78DD3 /* AttributedTextFormatter.swift in Sources */,
 				DE003E3D226A5443006BF1F2 /* Parser.swift in Sources */,
 				DEE467B3226C8BB600C78DD3 /* Lexer.swift in Sources */,
 			);
@@ -345,7 +353,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -400,7 +408,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -422,6 +430,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = "eu.thedreamweb.Text-Adventure";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -441,6 +450,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = "eu.thedreamweb.Text-Adventure";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -461,6 +471,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = "eu.thedreamweb.Text-AdventureTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -482,6 +493,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = "eu.thedreamweb.Text-AdventureTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
