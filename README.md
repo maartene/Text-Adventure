@@ -47,7 +47,7 @@ The formatter is based on `NSAttributedString` feature to parse HTML files. To d
 The formatter parses the provided HTML like text into `TextElement`s (a tree of formatted strings). Then the tree is flattened into an array of `[TextElement]`. Finally, the formatter converts the flattened array into a new SwiftUI `Text` value.
 
 ## Notes
-* This project targets macOS 10.14. This means that SwiftUI lacks several features:
+* This project now targets macOS 11 to support the following new SwiftUI features:
+* * SwiftUI Lifecycle (i.e. `@main`)
 * * Keyboard shortcuts (no enter to send the command)
 * * Automatic scroll to the end of the scrollview.
-Because these features require workarounds and the release of macOS 11 should be imminent, I'm not fixing them for now.. 
