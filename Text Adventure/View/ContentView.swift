@@ -9,36 +9,58 @@
 import SwiftUI
 import WebKit
 
+struct TextLine {
+    static var lineCount: Int = 0
+    let index: Int
+    let text: String
+    
+    init(_ text: String) {
+        self.index = Self.lineCount
+        self.text = text
+        Self.lineCount += 1
+    }
+}
+
 struct ContentView: View {
     @State private var command = ""
-    @State private var outputText = [String]()
+    @State private var outputText = [TextLine]()
     @State private var parser = Parser()
+    @State private var messageIndexToScrollTo = 0
     
     let formatter = SwiftUIFormatter()
     
     var body: some View {
         VStack {
             ScrollView(.vertical , showsIndicators: true) {
-                ForEach(outputText, id: \.self) { text in
-                    formatter.format(text).frame(maxWidth: .infinity, alignment: Alignment.bottomLeading )
+                ScrollViewReader { scrollProxy in
+                    ForEach(outputText, id: \.index) { text in
+                        formatter.format(text.text).frame(maxWidth: .infinity, alignment: Alignment.bottomLeading ).id(text.index)
+                    }.onChange(of: self.messageIndexToScrollTo) { index in
+                        withAnimation {
+                            scrollProxy.scrollTo(index)
+                        }
+                    }
                 }
             }
                 
             HStack {
                 TextField("Command: ", text: $command)
-                Button("OK", action: parseCommand)
+                Button("OK", action: parseCommand).keyboardShortcut(.defaultAction)
             }
-        }.frame(minWidth: 600, maxWidth: .infinity, minHeight: 400, maxHeight: .infinity, alignment: .center)
+        }
+        .frame(minWidth: 600, maxWidth: .infinity, minHeight: 400, maxHeight: .infinity, alignment: .center)
         .padding()
         .onAppear {
             setupWorld()
-            outputText = [parser.welcome()]
+            outputText = [TextLine(parser.welcome())]
         }
     }
     
     func parseCommand() {
         if command.count > 0 {
-            outputText.append(parser.parse(command: command))
+            let newText = TextLine(parser.parse(command: command))
+            outputText.append(newText)
+            messageIndexToScrollTo = newText.index
             command = ""
             // self.view.window?.makeFirstResponder(commandTextField)
             // outputTextView.scrollToEndOfDocument(nil)
