@@ -15,6 +15,7 @@ class World: Codable {
         case doors
         case currentRoomIndex
         case inventory
+        case flags
     }
     
     enum WorldErrors: Error {
@@ -26,6 +27,8 @@ class World: Codable {
     
     var doors = [Door]()
     var currentRoomIndex = 0
+    
+    var flags = Set<String>()
     
     var currentRoom: Room {
         get {
@@ -73,6 +76,7 @@ class World: Codable {
         doors = try values.decode([Door].self, forKey: .doors)
         inventory = try values.decode([Item].self, forKey: .inventory)
         currentRoomIndex = try values.decode(Int.self, forKey: .currentRoomIndex)
+        flags = try values.decode(Set<String>.self, forKey: .flags)
         
         guard currentRoomIndex >= 0 && currentRoomIndex < rooms.count else {
             throw WorldErrors.roomWithIndexDoesNotExist
@@ -87,6 +91,7 @@ class World: Codable {
         try container.encode(doors, forKey: .doors)
         try container.encode(inventory, forKey: .inventory)
         try container.encode(currentRoomIndex, forKey: .currentRoomIndex)
+        try container.encode(flags, forKey: .flags)
     }
     
     // MARK: Save and load game
@@ -187,14 +192,8 @@ class World: Codable {
         
         switch effect {
         case .light:
-            if currentRoom.isDark {
-                var room = currentRoom
-                room.isDark = false
-                rooms[currentRoomIndex] = room
-                return .itemHadEffect
-            } else {
-                return .itemHadNoEffect
-            }
+            flags.insert("light")
+            return .itemHadEffect
         }
     }
     

@@ -48,6 +48,6 @@ The formatter parses the provided HTML like text into `TextElement`s (a tree of 
 
 ## Notes
 * This project now targets macOS 11 to support the following new SwiftUI features:
-* * SwiftUI Lifecycle (i.e. `@main`)
-* * Keyboard shortcuts (no enter to send the command)
-* * Automatic scroll to the end of the scrollview.
+    * SwiftUI Lifecycle (i.e. `@main`)
+    * Keyboard shortcuts (no enter to send the command)
+    * Automatic scroll to the end of the scrollview.

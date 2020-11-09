@@ -60,7 +60,7 @@ struct Parser {
         case Verb.TAKE:
             return take(itemName: newCommand.noun!)
         case Verb.LOOKAT:
-            return lookat(itemName: newCommand.noun!)
+            return lookat(objectName: newCommand.noun!)
         case Verb.OPEN:
             return open()
         case Verb.INVENTORY:
@@ -89,23 +89,36 @@ struct Parser {
         """
     }
     
-    func lookat(itemName: String) -> String {
+    func lookat(objectName: String) -> String {
+        // First, check whether player intents to look at a door.
+        if objectName.uppercased() == "DOOR" {
+            if world.doorsInRoom(room: world.currentRoom).count > 0 {
+                var result = ""
+                for door in world.doorsInRoom(room: world.currentRoom) {
+                    result += "The door to the <EXIT>\(door.direction(from: world.currentRoom))</EXIT> requires <ITEM>\(door.requiresItemToOpen?.name ?? "no item")</ITEM> to open."
+                }
+                return result
+            } else {
+                return "<WARNING>There is no </WARNING> <EXIT>DOOR</EXIT> <WARNING> in the current room.</WARNING>"
+            }
+        }
+        
         // check whether there is an item in the room called itemName
         var itemsInRoomAndInventory = world.currentRoom.items
         itemsInRoomAndInventory.append(contentsOf: world.inventory)
         
-        let possibleItems = itemsInRoomAndInventory.filter { item in item.canBe(partOfName: itemName) }
+        let possibleItems = itemsInRoomAndInventory.filter { item in item.canBe(partOfName: objectName) }
         
         switch possibleItems.count {
         case 0:
-            return "<WARNING>There is no </WARNING> <ITEM>\(itemName)</ITEM> <WARNING> in the current room.</WARNING>"
+            return "<WARNING>There is no </WARNING> <ITEM>\(objectName)</ITEM> <WARNING> in the current room.</WARNING>"
         case 1:
             guard let item = possibleItems.first else {
                 return "<DEBUG>Unexpected nil value in \(possibleItems).first</DEBUG>"
             }
             return "<ITEM>\(item.name)</ITEM>: \(item.description)"
         case 2...:
-            return "<WARNING>More than one item contains </WARNING><ITEM>\(itemName)</ITEM>. <WARNING>Please be more specific.</WARNING>"
+            return "<WARNING>More than one item contains </WARNING><ITEM>\(objectName)</ITEM>. <WARNING>Please be more specific.</WARNING>"
         default:
             return "<DEBUG>Negative item count should not be possible.</DEBUG>"
         }
@@ -217,12 +230,12 @@ struct Parser {
         var result = "\nYou carry: \n"
         if world.inventory.count > 0 {
             world.inventory.forEach {
-                result += "<ITEM>\($0.name)</ITEM>"
+                result += "<ITEM>\($0.name)</ITEM>\n"
             }
         } else {
-            result += "Nothing."
+            result += "Nothing.\n"
         }
-        result += "\n"
+        //result += "\n"
         return result
     }
     
@@ -263,7 +276,7 @@ struct Parser {
     
     func describeRoom() -> String {
         var result = "\n"
-        if world.currentRoom.isDark {
+        if world.currentRoom.isDark && world.flags.contains("light") == false {
             result += "It's too dark to see."
         } else {
             result += showDescription()

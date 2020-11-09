@@ -108,6 +108,7 @@
         }
     ],
     "currentRoomIndex" : 0,
+    "flags" : [],
     "inventory" : [
         {
             "name" : "Lamp",
