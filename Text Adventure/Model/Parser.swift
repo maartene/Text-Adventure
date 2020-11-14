@@ -62,7 +62,7 @@ struct Parser {
         case Verb.LOOKAT:
             return lookat(objectName: newCommand.noun!)
         case Verb.OPEN:
-            return open()
+            return open(doorName: newCommand.noun!)
         case Verb.INVENTORY:
             return inventory()
         case Verb.USE:
@@ -202,18 +202,43 @@ struct Parser {
         }
     }
     
-    func open() -> String {
+    func open(doorName: String) -> String {
+        func interpretDoorOpenResult(_ doorResult: Door.DoorResult) -> String {
+            var result = ""
+            switch doorResult {
+            case .doorDidOpen:
+                result += "<ACTION>You opened the door.</ACTION>\n"
+                result += describeRoom()
+            case .missingItemToOpen(let item):
+                result = "<WARNING>You require <ITEM>\(item.name)</ITEM> to open the door.</WARNING>"
+            default:
+                result = "<DEBUG>Failed to open door: \(doorResult)</DEBUG>"
+            }
+            return result
+        }
+        
         if world.doorsInRoom(room: world.currentRoom).count < 1 {
             return "<WARNING>There is no closed door here.</WARNING>\n"
         }
         
-        switch world.open() {
-        case .doorDidOpen:
-            var result = "<ACTION>You opened the door.</ACTION>\n"
-            result += describeRoom()
-            return result
-        case let .missingItemToOpen(item):
-            return "<WARNING>You need an \(item.name) to open the door.</WARNING>\n"
+        let doorsInCurrentRoom = world.doorsInRoom(room: world.currentRoom)
+        
+        guard doorsInCurrentRoom.count > 0 else {
+            return "<WARNING>There is no closed door here.</WARNING>\n"
+        }
+        
+        let filteredDoors = doorsInCurrentRoom.filter { door in
+            door.name.uppercased().contains(doorName.uppercased())
+        }
+        
+        if filteredDoors.count == 0 {
+            return "<WARNING>Could not find door with name \(doorName) in this room.</WARNING>"
+        } else if filteredDoors.count > 1 {
+            return "<WARNING>Please be more specific which door you want to open.</WARNING>\n"
+        } else {
+            let door = filteredDoors[0]
+            let result = world.open(door: door)
+            return interpretDoorOpenResult(result)
         }
     }
     
@@ -313,7 +338,7 @@ struct Parser {
         
         var result = ""
         doorsInRoom.forEach {
-            result += "There is a <EXIT>DOOR</EXIT> to the <EXIT>\($0.direction(from: world.currentRoom))</EXIT>\n"
+            result += "There is a <EXIT>\($0.name.uppercased())</EXIT> to the <EXIT>\($0.direction(from: world.currentRoom))</EXIT>\n"
         }
         
         return result

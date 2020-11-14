@@ -11,16 +11,18 @@ import Foundation
 // when you open a door, it creates a new connection
 struct Door: Equatable, Codable {
     enum DoorResult: Equatable {
+        case doorDoesNotExist
         case doorDidOpen
         case missingItemToOpen(item: Item)
     }
     
+    let name: String
     let betweenRooms: [Int: Direction]
     var requiresItemToOpen: Item?
     
-    static func createDoor(between room1: Room, facing: Direction, to room2: Room, itemToOpen: Item? = nil) -> Door {
+    static func createDoor(between room1: Room, facing: Direction, to room2: Room, itemToOpen: Item? = nil, name: String = "DOOR") -> Door {
         let betweenRooms = [room1.id: facing, room2.id: facing.opposite()]
-        return Door(betweenRooms: betweenRooms, requiresItemToOpen: itemToOpen)
+        return Door(name: name, betweenRooms: betweenRooms, requiresItemToOpen: itemToOpen)
     }
     
     func canOpen(world: World) -> Bool {

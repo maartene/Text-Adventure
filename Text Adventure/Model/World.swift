@@ -50,17 +50,26 @@ class World: Codable {
         addRoom(id: 3, name: "East corridor", description: "You are in a tight corridor. There are some storage shelves left of you.")
         addRoom(id: 4, name: "South corridor", description: "You are in a tight corridor. A ceiling window provides some light around you.")
         addRoom(id: 5, name: "Secret Stash", description: "Congratulations! You found the secret stash!")
+        addRoom(id: 6, name: "Choose door", description: "There are three doors in this room. Which one do you choose?")
         
         connectRoomFrom(room: rooms[0]!, using: .EAST, to: rooms[1]!)
         connectRoomFrom(room: rooms[1]!, using: .EAST, to: rooms[2]!)
         connectRoomFrom(room: rooms[2]!, using: .SOUTH, to: rooms[3]!)
         connectRoomFrom(room: rooms[3]!, using: .WEST, to: rooms[4]!)
         connectRoomFrom(room: rooms[4]!, using: .NORTH, to: rooms[1]!)
+        connectRoomFrom(room: rooms[0]!, using: .NORTH, to: rooms[6]!)
         
         rooms[3] = rooms[3]!.addItem(Item(name: "Skeleton Key", description: "Bone made key."))
         rooms[3] = rooms[3]!.addItem(Item(name: "Green Key", description: "Green key."))
         
+        let singleUseKey = Item(name: "Single Use Key", description: "Use this key to open one of three doors.")
+        rooms[6] = rooms[6]!.addItem(singleUseKey)
+        
         doors.append(Door.createDoor(between: rooms[2]!, facing: .NORTH, to: rooms[5]!, itemToOpen: Item(name: "Skeleton Key", description: "")))
+        
+        doors.append(Door.createDoor(between: rooms[6]!, facing: .NORTH, to: rooms[5]!, itemToOpen: singleUseKey, name: "First Door"))
+        doors.append(Door.createDoor(between: rooms[6]!, facing: .NORTH, to: rooms[5]!, itemToOpen: singleUseKey, name: "Second Door"))
+        doors.append(Door.createDoor(between: rooms[6]!, facing: .NORTH, to: rooms[5]!, itemToOpen: singleUseKey, name: "Third Door"))
     }
     
     required init(from decoder: Decoder) throws {
@@ -173,14 +182,14 @@ class World: Codable {
         }
     }
     
-    func open() -> Door.DoorResult {
-        let doorsInCurrentRoom = doorsInRoom(room: currentRoom)
-        var result = Door.DoorResult.doorDidOpen
-        if doorsInCurrentRoom.count > 0 {
-            doorsInCurrentRoom.forEach {
-                result = $0.open(world: self)
-                if result == .doorDidOpen { doors.remove(at: doors.firstIndex(of: $0)!) }
-            }
+    func open(door: Door) -> Door.DoorResult {
+        guard doorsInRoom(room: currentRoom).contains(door) else {
+            return Door.DoorResult.doorDoesNotExist
+        }
+        
+        let result = door.open(world: self)
+        if result == .doorDidOpen {
+            doors.remove(at: doors.firstIndex(of: door)!)
         }
         return result
     }
