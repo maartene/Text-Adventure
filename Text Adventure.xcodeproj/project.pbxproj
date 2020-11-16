@@ -17,6 +17,7 @@
 		DE1F62D8252847AC003FFA99 /* SwiftUIFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1F62D7252847AC003FFA99 /* SwiftUIFormatter.swift */; };
 		DE288A5022875C8800B5C48D /* defaultWorld.json in Resources */ = {isa = PBXBuildFile; fileRef = DE288A4F22875C8800B5C48D /* defaultWorld.json */; };
 		DE5142422535EEAC00B0B41C /* TextAdventureApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5142412535EEAC00B0B41C /* TextAdventureApp.swift */; };
+		DE5F48E2256159B800457862 /* Verb.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5F48E1256159B800457862 /* Verb.swift */; };
 		DE70EB4A22746C0A0076C503 /* template.html in Resources */ = {isa = PBXBuildFile; fileRef = DE70EB4922746C0A0076C503 /* template.html */; };
 		DEB665C92514ABD7007757AC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB665C82514ABD7007757AC /* ContentView.swift */; };
 		DEE467B1226AF2A500C78DD3 /* AttributedTextFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE467B0226AF2A500C78DD3 /* AttributedTextFormatter.swift */; };
@@ -51,6 +52,7 @@
 		DE1F62D7252847AC003FFA99 /* SwiftUIFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIFormatter.swift; sourceTree = "<group>"; };
 		DE288A4F22875C8800B5C48D /* defaultWorld.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = defaultWorld.json; sourceTree = "<group>"; };
 		DE5142412535EEAC00B0B41C /* TextAdventureApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAdventureApp.swift; sourceTree = "<group>"; };
+		DE5F48E1256159B800457862 /* Verb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Verb.swift; sourceTree = "<group>"; };
 		DE70EB4922746C0A0076C503 /* template.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = template.html; sourceTree = "<group>"; };
 		DEB665C82514ABD7007757AC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		DEE467B0226AF2A500C78DD3 /* AttributedTextFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedTextFormatter.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 				DE0F048822907D5D00A690A6 /* Room.swift */,
 				DE0F048A22907D7500A690A6 /* Door.swift */,
 				DE0F048C22907D8600A690A6 /* Item.swift */,
+				DE5F48E1256159B800457862 /* Verb.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -197,7 +200,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1020;
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1220;
 				ORGANIZATIONNAME = thedreamweb;
 				TargetAttributes = {
 					DE003E192269EBCF006BF1F2 = {
@@ -253,6 +256,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE5F48E2256159B800457862 /* Verb.swift in Sources */,
 				DE1F62D42528476A003FFA99 /* Formatter.swift in Sources */,
 				DEE467B5226CFE6D00C78DD3 /* World.swift in Sources */,
 				DE0F048D22907D8600A690A6 /* Item.swift in Sources */,
@@ -313,6 +317,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -374,6 +379,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -407,6 +413,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Text Adventure/Text_Adventure.entitlements";
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = ZXW8GTM6FG;
@@ -427,6 +434,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Text Adventure/Text_Adventure.entitlements";
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = ZXW8GTM6FG;
@@ -456,7 +464,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "eu.thedreamweb.Text-AdventureTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -478,7 +486,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "eu.thedreamweb.Text-AdventureTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

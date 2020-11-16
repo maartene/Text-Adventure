@@ -23,11 +23,11 @@ struct Lexer {
         "i": "INVENTORY"
     ]
     
-    static func lex(_ string: String) -> [String] {
+    static func lex(_ string: String) -> Sentence {
         let subStrings = string.split(separator: " ")
         
         guard subStrings.count > 0 else {
-            return [""]
+            return .empty
         }
         
         if let abbreviation = abbreviations[String(subStrings[0])] {
@@ -39,15 +39,55 @@ struct Lexer {
             return lex(expandedString)
         }
         
-        var result = [String]()
-        
-        subStrings.forEach {
-            result.append(String($0))
-        }
-        
-        
-        
-        return result
+        return Sentence.createSentence(string)
     }
     
+}
+
+enum Sentence {
+    case empty
+    case illegal
+    case noNoun(verb: String)
+    case oneNoun(verb: String, noun: String)
+    case twoNouns(verb: String, directObject: String, relation: String, indirectObject: String)
+    
+    static func createSentence(_ text: String) -> Sentence {
+        let words = text.split(separator: " ")
+        
+        guard words.count > 0 else {
+            return .empty
+        }
+        
+        let uppercasedWords = words.map { $0.uppercased() }
+        let verb = String(uppercasedWords[0])
+        
+        if words.count == 1 {
+            return .noNoun(verb: verb)
+        }
+        
+        if let withIndex = uppercasedWords.firstIndex(of: "WITH") {
+            guard withIndex > 0 && withIndex < words.count else {
+                return .illegal
+            }
+            
+            let with = String(uppercasedWords[withIndex])
+            let noun1words = words[1 ..< withIndex]
+            let noun2words = words[withIndex + 1 ..< words.count]
+            let noun1 = noun1words.joined(separator: " ")
+            let noun2 = noun2words.joined(separator: " ")
+            
+            /*guard noun1.count > 0, noun2.count > 0 else {
+                return .illegal
+            }*/
+            
+            let sentence = Sentence.twoNouns(verb: verb, directObject: noun1, relation: with, indirectObject: noun2)
+            return sentence
+        }
+        
+        assert(words.count >= 2)
+        let nounWords = words[1 ..< words.count]
+        let noun = nounWords.joined(separator: " ")
+        let sentence = Sentence.oneNoun(verb: String(verb), noun: noun)
+        return sentence
+    }
 }

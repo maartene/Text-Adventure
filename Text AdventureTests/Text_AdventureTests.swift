@@ -31,4 +31,22 @@ class Text_AdventureTests: XCTestCase {
         }
     }
 
+    func testSentence() {
+        let sentences = [
+            "TAKE lamp",
+            "USE foo with bar",
+            "help",
+            "Use foo with",
+            "Use with bar",
+            "Take special lamp",
+            "Take",
+            "Use with",
+            "with"
+        ]
+        
+        for sentenceString in sentences {
+            let sentence = Sentence.createSentence(sentenceString)
+            print(sentence)
+        }
+    }
 }

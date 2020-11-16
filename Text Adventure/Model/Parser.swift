@@ -21,32 +21,57 @@ struct Parser {
     }
     
     mutating func parse(command: String) -> String {
-        
-        let words = Lexer.lex(command)
-        
-        // for the first word, expect a verb
         let newCommand: Command
-        if let verbWord = words.first?.uppercased() {
-            if let verb = Verb(rawValue: verbWord) {
-                if verb.expectNoun() {
-                    // expect a noun, check whether one is available
-                    if words.count < 2 {
-                        return "<WARNING>Expected a noun as the second word for verb: \(verb)</WARNING>\n"
-                    } else {
-                        newCommand = Command(verb: verb, noun: words[1])
-                    }
-                } else {
-                    // don't expect any noun
-                    newCommand = Command(verb: verb, noun: nil)
-                }
-            } else {
-                let word = verbWord.isEmpty ? ", but none was found." : ", found: \"\(verbWord)\""
+        let sentence = Lexer.lex(command)
+        
+        switch sentence {
+        case .illegal:
+            return "<DEBUG>Failed to parse: '\(command)'</DEBUG>\n"
+        case .empty:
+            return "<DEBUG>nothing to parse</DEBUG>\n"
+        case .noNoun(let verbWord):
+            guard let verb = Verb(rawValue: verbWord) else {
+                let word = verbWord.isEmpty ? ", but none was found." : ", found: '\(verbWord)'"
                 return "<WARNING>Expected a verb as the first word\(word)</WARNING>\n"
             }
-        } else {
-            return "<DEBUG>nothing to parse</DEBUG>\n"
+            newCommand = Command(verb: verb, noun: nil, indirectObject: nil)
+        case .oneNoun(let verbWord, let noun):
+            guard let verb = Verb(rawValue: verbWord) else {
+                let word = verbWord.isEmpty ? ", but none was found." : ", found: '\(verbWord)'"
+                return "<WARNING>Expected a verb as the first word\(word)</WARNING>\n"
+            }
+            newCommand = Command(verb: verb, noun: noun, indirectObject: nil)
+        case .twoNouns(let verbWord, let directObject, let relation, let indirectObject):
+            guard let verb = Verb(rawValue: verbWord) else {
+                let word = verbWord.isEmpty ? ", but none was found." : ", found: '\(verbWord)'"
+                return "<WARNING>Expected a verb as the first word\(word)</WARNING>\n"
+            }
+            
+            guard directObject.count > 0 else {
+                return "<WARNING>Expected the direct object after verb '\(verb)', before relation '\(relation)', but did not find any.</WARNING>\n"
+            }
+            
+            guard directObject.count > 0 else {
+                return "<WARNING>Expected the indirect object after relation '\(relation)', but did not find any.</WARNING>\n"
+            }
+            
+            newCommand = Command(verb: verb, noun: directObject, indirectObject: indirectObject)
         }
         
+        
+        if newCommand.verb.expectedNounCount == 1 && newCommand.noun == nil {
+            return "<WARNING>Expected a noun for verb \(newCommand.verb), but did not find any.</WARNING>"
+        }
+        
+        if newCommand.verb.expectedNounCount == 2 {
+            if newCommand.noun == nil {
+                return "<WARNING>Expected a direct object for verb \(newCommand.verb), but did not find any.</WARNING>"
+            }
+            if newCommand.indirectObject == nil {
+                return "<WARNING>Expected an indirect object for verb \(newCommand.verb), but did not find any.</WARNING>"
+            }
+        }
+                                
         // execute the command
         switch newCommand.verb {
         case Verb.HELP:
@@ -66,7 +91,7 @@ struct Parser {
         case Verb.INVENTORY:
             return inventory()
         case Verb.USE:
-            return use(itemName: newCommand.noun!)
+            return use(itemName: newCommand.noun!, indirectObject: newCommand.indirectObject)
         case Verb.SAVE:
             return saveGame()
         case Verb.LOAD:
@@ -83,9 +108,9 @@ struct Parser {
     
     func about() -> String {
         return """
-            This is a small text adventure written in Swift. I Hope you have fun playing it.
-        &copy; <a href="https://www.thedreamweb.eu/">thedreamweb.eu</a> / Maarten Engels, 2019. MIT license.
-        See <a href="https://github.com/maartene/Text-Adventure.git">https://github.com/maartene/Text-Adventure.git</a> for more information.
+        This is a small text adventure written in Swift. I Hope you have fun playing it.
+        (c) thedreamweb.eu / Maarten Engels, 2019. MIT license.
+        See https://github.com/maartene/Text-Adventure.git for more information.
         """
     }
     
@@ -124,7 +149,7 @@ struct Parser {
         }
     }
     
-    func use(itemName: String) -> String {
+    func use(itemName: String, indirectObject: String?) -> String {
         // get a list of all items in inventory that somehow have the itemName in it's name
         let potentialItems = world.inventory.filter { item in item.name.uppercased().contains(itemName.uppercased()) }
         
@@ -176,10 +201,15 @@ struct Parser {
             // get an array of all the words that make up the item name. We can use this to find all matching items
             let itemWords = world.currentRoom.items[index].name.split(separator: " ")
             
-            itemWords.forEach {
-                if $0.uppercased().starts(with: itemName.uppercased()) {
-                    let potentialItem = world.currentRoom.items[index]
-                    potentialItems.append(potentialItem)
+            itemWords.forEach { itemWord in
+                let takeWords = itemName.split(separator: " ")
+                takeWords.forEach { takeWord in
+                    if itemWord.uppercased().starts(with: takeWord.uppercased()) {
+                        let potentialItem = world.currentRoom.items[index]
+                        if potentialItems.contains(potentialItem) == false {
+                            potentialItems.append(potentialItem)
+                        }
+                    }
                 }
             }
         }
@@ -302,7 +332,7 @@ struct Parser {
     func describeRoom() -> String {
         var result = "\n"
         if world.currentRoom.isDark && world.flags.contains("light") == false {
-            result += "It's too dark to see."
+            result += "It's too dark to see.\n"
         } else {
             result += showDescription()
             result += showExits()
@@ -345,85 +375,8 @@ struct Parser {
     }
 }
 
-enum Verb: String, CaseIterable {
-    case HELP
-    case LOOK
-    case LOOKAT
-    case GO
-    case OPEN
-    case TAKE
-    case ABOUT
-    case INVENTORY
-    case QUIT
-    case SAVE
-    case LOAD
-    case USE
-    
-    func expectNoun() -> Bool
-    {
-        switch self {
-        case .HELP:
-            return false
-        case .ABOUT:
-            return false
-        case .LOOK:
-            return false
-        case .INVENTORY:
-            return false
-        case .QUIT:
-            return false
-        case .SAVE:
-            return false
-        case .LOAD:
-            return false
-        default:
-            return true
-        }
-    }
-    
-    var explanation: String {
-        get {
-            var result = ""
-            switch self {
-            case .HELP:
-                result += "Shows a list of commands."
-            case .GO:
-                result += "Go in a direction (NORTH, SOUTH, EAST, WEST)"
-            case .ABOUT:
-                result += "Information about this game."
-            case .LOOK:
-                result += "Look around in the current room."
-            case .INVENTORY:
-                result += "Show your inventory."
-            case .QUIT:
-                result += "Quit the game (instantanious - no save game warning!)"
-            case .OPEN:
-                result += "Open a door or container (chest/box/safe/...)."
-            case .LOOKAT:
-                result += "Look at an object in the room or in your inventory."
-            case .TAKE:
-                result += "Pick up an item into your inventory."
-            case .USE:
-                result += "Use an item."
-            case .SAVE:
-                result += "Save your current progress."
-            case .LOAD:
-                result += "Load saved game."
-            default:
-                result += ""
-            }
-            if expectNoun() {
-                result += " use: <STRONG>\(self) [NOUN]</STRONG>"
-            } else {
-                result += " use: <STRONG>\(self)</STRONG>"
-            }
-            
-            return result
-        }
-    }
-}
-
 struct Command {
     let verb: Verb
     let noun: String?
+    let indirectObject: String?
 }

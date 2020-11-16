@@ -11,6 +11,7 @@ import Foundation
 struct Item: Equatable, Codable {
     enum ItemEffect: Int, Codable {
         case light
+        case combine
     }
     
     enum ItemResult: String {
