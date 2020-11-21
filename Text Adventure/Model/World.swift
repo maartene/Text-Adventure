@@ -139,6 +139,7 @@ class World: Codable {
             let decoder = JSONDecoder()
             let data = try Data(contentsOf: url)
             world = try? decoder.decode(World.self, from: data)
+            print("Succesfully loaded world!")
         } catch {
             print("Error: \(error)")
         }

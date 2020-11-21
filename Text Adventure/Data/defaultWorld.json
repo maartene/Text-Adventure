@@ -1,0 +1,180 @@
+{
+  "flags" : [
+
+  ],
+  "doors" : [
+    {
+      "name" : "DOOR",
+      "betweenRooms" : {
+        "2" : "NORTH",
+        "5" : "SOUTH"
+      },
+      "requiresItemToOpen" : {
+        "name" : "Skeleton Key",
+        "description" : ""
+      }
+    },
+    {
+      "name" : "First Door",
+      "betweenRooms" : {
+        "5" : "SOUTH",
+        "6" : "NORTH"
+      },
+      "requiresItemToOpen" : {
+        "name" : "Single Use Key",
+        "description" : "Use this key to open one of three doors."
+      }
+    },
+    {
+      "name" : "Second Door",
+      "betweenRooms" : {
+        "5" : "SOUTH",
+        "6" : "NORTH"
+      },
+      "requiresItemToOpen" : {
+        "name" : "Single Use Key",
+        "description" : "Use this key to open one of three doors."
+      }
+    },
+    {
+      "name" : "Third Door",
+      "betweenRooms" : {
+        "5" : "SOUTH",
+        "6" : "NORTH"
+      },
+      "requiresItemToOpen" : {
+        "name" : "Single Use Key",
+        "description" : "Use this key to open one of three doors."
+      }
+    }
+  ],
+  "rooms" : [
+    {
+      "id" : 4,
+      "exits" : [
+        "NORTH",
+        1,
+        "EAST",
+        3
+      ],
+      "items" : [
+
+      ],
+      "name" : "South corridor",
+      "description" : "You are in a tight corridor. A ceiling window provides some light around you.",
+      "isDark" : false
+    },
+    {
+      "id" : 5,
+      "exits" : [
+
+      ],
+      "items" : [
+
+      ],
+      "name" : "Secret Stash",
+      "description" : "Congratulations! You found the secret stash!",
+      "isDark" : false
+    },
+    {
+      "id" : 0,
+      "exits" : [
+        "NORTH",
+        6,
+        "EAST",
+        1
+      ],
+      "items" : [
+
+      ],
+      "name" : "Small Cupboard",
+      "description" : "You find yourself in a small cupboard. There are some empty shelves nearby. The only light eminates from the crack between the floor and the door.",
+      "isDark" : true
+    },
+    {
+      "id" : 2,
+      "exits" : [
+        "WEST",
+        1,
+        "SOUTH",
+        3
+      ],
+      "items" : [
+
+      ],
+      "name" : "Bedroom",
+      "description" : "This appears to be the master bedroom.",
+      "isDark" : false
+    },
+    {
+      "id" : 1,
+      "exits" : [
+        "SOUTH",
+        4,
+        "EAST",
+        2,
+        "WEST",
+        0
+      ],
+      "items" : [
+
+      ],
+      "name" : "Main Hall",
+      "description" : "A slightly larger hallway. A skylight provides illumination, making your wonder what is better: not seeing anything because of absense of light or not seeing anything because there simply is nothing to see?",
+      "isDark" : false
+    },
+    {
+      "id" : 3,
+      "exits" : [
+        "NORTH",
+        2,
+        "WEST",
+        4
+      ],
+      "items" : [
+        {
+          "name" : "Skeleton Key",
+          "description" : "Bone made key."
+        },
+        {
+          "name" : "Green Key",
+          "description" : "Green key."
+        }
+      ],
+      "name" : "East corridor",
+      "description" : "You are in a tight corridor. There are some storage shelves left of you.",
+      "isDark" : false
+    },
+    {
+      "id" : 6,
+      "exits" : [
+        "SOUTH",
+        0
+      ],
+      "items" : [
+        {
+          "name" : "Single Use Key",
+          "description" : "Use this key to open one of three doors."
+        }
+      ],
+      "name" : "Choose door",
+      "description" : "There are three doors in this room. Which one do you choose?",
+      "isDark" : false
+    }
+  ],
+  "inventory" : [
+    {
+      "replaceWithAfterUse" : "Oil Lamp",
+      "name" : "Empty oil lamp",
+      "combineItemName" : "Fuel",
+      "description" : "This lamp should provide enough light, when it has fuel (which it hasn't)."
+    },
+    {
+      "replaceWithAfterUse" : "Oil Lamp",
+      "name" : "Fuel",
+      "combineItemName" : "Empty oil lamp",
+      "description" : "Fuel for an oil lamp."
+    }
+  ],
+  "currentRoomIndex" : 0
+}
