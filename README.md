@@ -58,4 +58,5 @@ The formatter parses the provided HTML like text into `TextElement`s (a tree of 
     * SwiftUI Lifecycle (i.e. `@main`)
     * Keyboard shortcuts (no enter to send the command)
     * Automatic scroll to the end of the scrollview.
-* Known issues: SwiftUI has no way to automatically focus a control. In particular, I want the command field to have focus after starting the program so you can just start typing away. I'm currently deciding whether to use a workaround or simply wait for this (obvious) functionality to be shipped by Apple. 
+* Known issues: 
+    * SwiftUI has no way to automatically focus a control. In particular, I want the command field to have focus after starting the program so you can just start typing away. I'm currently deciding whether to use a workaround or simply wait for this (obvious) functionality to be shipped by Apple. 
