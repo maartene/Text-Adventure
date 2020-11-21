@@ -21,6 +21,7 @@ enum Verb: String, CaseIterable {
     case SAVE
     case LOAD
     case USE
+    case COMBINE
     
     var expectedNounCount: Int
     {
@@ -35,6 +36,8 @@ enum Verb: String, CaseIterable {
             return 1
         case .USE:
             return 1
+        case .COMBINE:
+            return 2
         default:
             return 0
         }
@@ -63,25 +66,23 @@ enum Verb: String, CaseIterable {
             case .TAKE:
                 result += "Pick up an item into your inventory."
             case .USE:
-                result += "Use an item. Or use two items together."
+                result += "Use an item."
+            case .COMBINE:
+                result += "Combine two items together into a new one."
             case .SAVE:
                 result += "Save your current progress."
             case .LOAD:
                 result += "Load saved game."
-            default:
-                result += ""
             }
             
-            if expectedNounCount == 1 {
+            if expectedNounCount == 2 {
+                result += " use: <STRONG>\(self) [ITEM 1] WITH [ITEM 2]</STRONG>"
+            } else if expectedNounCount == 1 {
                 result += " use: <STRONG>\(self) [NOUN]</STRONG>"
             } else {
                 result += " use: <STRONG>\(self)</STRONG>"
             }
-            
-            if self == .USE {
-                result += " use: <STRONG>USE [DIRECT OBJECT] WITH [INDIRECT OBJECT]</STRONG>"
-            }
-            
+                        
             return result
         }
     }

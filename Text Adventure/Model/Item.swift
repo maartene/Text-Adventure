@@ -9,15 +9,18 @@
 import Foundation
 
 struct Item: Equatable, Codable {
+    static let prototypes = [Item(name: "Oil Lamp", description: "The lamp has fuel.", effect: .light)]
+    
     enum ItemEffect: Int, Codable {
         case light
-        case combine
     }
     
     enum ItemResult: String {
         case noEffect
         case itemHadNoEffect
         case itemHadEffect
+        case itemsCannotBeCombined
+        case itemNotInInventory
     }
     
     static func == (lhs: Item, rhs: Item) -> Bool {
@@ -31,10 +34,26 @@ struct Item: Equatable, Codable {
     let name: String
     let description: String
     let effect: ItemEffect?
+    let combineItemName: String?
+    let replaceWithAfterUse: String?
     
-    init(name: String, description: String, effect: ItemEffect? = nil) {
+    private init(name: String, description: String, effect: ItemEffect?, combineItemName: String?, replaceWithAfterUse: String?) {
         self.name = name
         self.description = description
         self.effect = effect
+        self.combineItemName = combineItemName
+        self.replaceWithAfterUse = replaceWithAfterUse
+    }
+    
+    init(name: String, description: String) {
+        self = Item(name: name, description: description, effect: nil, combineItemName: nil, replaceWithAfterUse: nil)
+    }
+    
+    init(name: String, description: String, effect: ItemEffect) {
+        self = Item(name: name, description: description, effect: effect, combineItemName: nil, replaceWithAfterUse: nil)
+    }
+    
+    init(name: String, description: String, combineItemName: String, replaceWithAfterUse: String) {
+        self = Item(name: name, description: description, effect: nil, combineItemName: combineItemName, replaceWithAfterUse: replaceWithAfterUse)
     }
 }

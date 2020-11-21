@@ -49,7 +49,7 @@ enum Sentence {
     case illegal
     case noNoun(verb: String)
     case oneNoun(verb: String, noun: String)
-    case twoNouns(verb: String, directObject: String, relation: String, indirectObject: String)
+    case twoNouns(verb: String, noun1: String, relation: String, noun2: String)
     
     static func createSentence(_ text: String) -> Sentence {
         let words = text.split(separator: " ")
@@ -80,7 +80,7 @@ enum Sentence {
                 return .illegal
             }*/
             
-            let sentence = Sentence.twoNouns(verb: verb, directObject: noun1, relation: with, indirectObject: noun2)
+            let sentence = Sentence.twoNouns(verb: verb, noun1: noun1, relation: with, noun2: noun2)
             return sentence
         }
         

@@ -15,16 +15,23 @@ You can also create a constructor/factory that creates instances of World.
 * Add doors by appending Door instances to world.doors.
 
 ## Lexer/Parser
-The lexer translates the sentence in words (seperated by spaces).
-A sentance like:
-* TAKE Skeleton Key is lexed to "TAKE", "Skeleton", "Key".
+The lexer translates the text input into a 'sentence'. I.e. it associates structure to the sentence, although it does not validate yet whether it's a valid command (that's up to the parser).
 
 The text parsing is pretty rudimentary. It expects sentences of the form:
 * [VERB] or 
 * [VERB] [NOUN]
+* [VERB] [NOUN] [RELATIONSHIP] [ANOTHER NOUN]
 
-However, take the Skeleton Key from above as an example. Currently the only word passed to the "TAKE" command is the first word after the verb, i.e. "Skeleton". This doesn't matter because the parser tries to make sense of partial words as much as possible. 
+A `Sentence` is basically an enum with associated values for the sentence parts where applicatible. The following sentence cases are possibles:
+* empty: the input was empty
+* illegal: it was not possible to transform the input text to any sentence
+* no noun: a sentence consisting of just a verb. I.e. 'LOOK';
+* one noun: a sentence with a verb and a noun. I.e. 'TAKE' (verb) 'Skeleton Key' (noun);
+* two nouns: a sentence with a very, a noun, a relation and another noun. I.e. 'COMBINE' (verb) 'Empty lamp' (first noun) 'WITH' (relation) 'Fuel' (second noun).
 
+The lexer also contains some abbreviations and synonims for common commands. I.e. input `n` is translated to `GO NORTH` (available for all four directions). `GET` is translated to `TAKE`. 
+
+The parser has some 'fuzzy logic' to help players make sense of commands. It does this by trying to match input to reasonable nouns as much as possible.
 For instance, in a room with one Skeleton Key, all of the following commands pick up the key:
 * TAKE Skeleton Key
 * TAKE Key
@@ -51,3 +58,4 @@ The formatter parses the provided HTML like text into `TextElement`s (a tree of 
     * SwiftUI Lifecycle (i.e. `@main`)
     * Keyboard shortcuts (no enter to send the command)
     * Automatic scroll to the end of the scrollview.
+* Known issues: SwiftUI has no way to automatically focus a control. In particular, I want the command field to have focus after starting the program so you can just start typing away. I'm currently deciding whether to use a workaround or simply wait for this (obvious) functionality to be shipped by Apple. 

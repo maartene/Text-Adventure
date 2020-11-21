@@ -49,4 +49,32 @@ class Text_AdventureTests: XCTestCase {
             print(sentence)
         }
     }
+    
+    func testUseTwoObjects() {
+        let item1 = Item(name: "item 1", description: "item number 1", combineItemName: "item 2", replaceWithAfterUse: "new item")
+        let item2 = Item(name: "item 2", description: "item number 2", combineItemName: "item 1", replaceWithAfterUse: "new item")
+        
+        let world = World()
+        world.inventory.append(contentsOf: [item1, item2])
+        
+        var parser = Parser()
+        parser.world = world
+        
+        let sentences = [
+            "USE item 1 WITH item 2",
+            "USE item with item",
+            "USE 1 with 2",
+            "USE foo with item 2",
+            "USE item 1 with bar",
+            "USE foo with bar",
+            "USE item 1 with item",
+            "USE item with item 2",
+            "USE item 2 with item 1"
+        ]
+        
+        for sentenceString in sentences {
+            let result = parser.parse(command: sentenceString)
+            print(result)
+        }
+    }
 }

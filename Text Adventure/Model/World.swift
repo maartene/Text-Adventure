@@ -59,10 +59,12 @@ class World: Codable {
         connectRoomFrom(room: rooms[4]!, using: .NORTH, to: rooms[1]!)
         connectRoomFrom(room: rooms[0]!, using: .NORTH, to: rooms[6]!)
         
+        rooms[0]?.isDark = true
         rooms[3] = rooms[3]!.addItem(Item(name: "Skeleton Key", description: "Bone made key."))
         rooms[3] = rooms[3]!.addItem(Item(name: "Green Key", description: "Green key."))
         
         let singleUseKey = Item(name: "Single Use Key", description: "Use this key to open one of three doors.")
+        
         rooms[6] = rooms[6]!.addItem(singleUseKey)
         
         doors.append(Door.createDoor(between: rooms[2]!, facing: .NORTH, to: rooms[5]!, itemToOpen: Item(name: "Skeleton Key", description: "")))
@@ -70,6 +72,9 @@ class World: Codable {
         doors.append(Door.createDoor(between: rooms[6]!, facing: .NORTH, to: rooms[5]!, itemToOpen: singleUseKey, name: "First Door"))
         doors.append(Door.createDoor(between: rooms[6]!, facing: .NORTH, to: rooms[5]!, itemToOpen: singleUseKey, name: "Second Door"))
         doors.append(Door.createDoor(between: rooms[6]!, facing: .NORTH, to: rooms[5]!, itemToOpen: singleUseKey, name: "Third Door"))
+        
+        inventory.append(Item(name: "Empty oil lamp", description: "This lamp should provide enough light, when it has fuel (which it hasn't).", combineItemName: "Fuel", replaceWithAfterUse: "Oil Lamp"))
+        inventory.append(Item(name: "Fuel", description: "Fuel for an oil lamp.", combineItemName: "Empty oil lamp", replaceWithAfterUse: "Oil Lamp"))
     }
     
     required init(from decoder: Decoder) throws {
@@ -204,6 +209,36 @@ class World: Codable {
             flags.insert("light")
             return .itemHadEffect
         }
+    }
+    
+    func use(item: Item, with indirectItem: Item) -> Item.ItemResult {
+        guard item.combineItemName == indirectItem.name else {
+            return .itemsCannotBeCombined
+        }
+        
+        guard indirectItem.combineItemName == item.name else {
+            return .itemsCannotBeCombined
+        }
+        
+        guard let replaceItemName = item.replaceWithAfterUse else {
+            return .itemsCannotBeCombined
+        }
+        
+        if let newItem = Item.prototypes.first(where: { item in item.name == replaceItemName }) {
+            if let itemIndex = inventory.firstIndex(of: item) {
+                inventory.remove(at: itemIndex)
+            }
+            
+            if let itemIndex = inventory.firstIndex(of: indirectItem) {
+                inventory.remove(at: itemIndex)
+            }
+            
+            inventory.append(newItem)
+            
+            return .itemHadEffect
+        }
+        
+        return .noEffect
     }
     
     // MARK: Command helpers
